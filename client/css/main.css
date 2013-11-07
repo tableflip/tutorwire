@@ -1,0 +1,246 @@
+@import url("//fonts.googleapis.com/css?family=Lato:300,400,700");
+
+html, body, #map{
+	padding:0;
+	margin:0;
+	width:100%;
+	height: 100%;
+}
+header{
+	padding:8px 10px;
+	position: absolute;
+	top:0;
+}
+header h1,
+header h2{
+	font-weight: 300;
+	font-size: 2.1em;
+	line-height: 1em;
+	margin:0;
+	padding:0;
+	color:#fff;
+}
+header h1 a {
+	display: block;
+	width: 200px;
+	height: 51px;
+	background: url(/images/logo-tutorwire.png);
+	background-size: 100% 100%;
+	text-indent: -999em;
+	color: #fff;
+}
+header h1 a:hover, header h1 a:focus {
+	text-decoration: none;
+	color: #fff;
+	text-shadow: 0 0 3px #fff;
+}
+header h2{
+	font-weight: 400;
+	font-size: 1.1em;
+	letter-spacing: 1.5px;
+	padding: 2px 0 0 48px;
+}
+#map{
+	position: absolute;
+	top:0;
+}
+#map:after {
+	content: " ";
+	background: rgba(0, 0, 0, 0.5);
+	box-shadow: 0 0 0.25em #000;
+	border-right: 1px solid #000;
+	width: 20%;
+	min-width: 280px;
+	height: 100%;
+	position: absolute;
+}
+body{
+	background: #fefefe;
+	font-family: Lato, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+   	font-weight: 300;
+}
+label{
+	font-size: 1.15em;
+	color: #fff;
+}
+.navbar{
+	position: absolute;
+	top:0;
+	left:0;
+}
+.overlay{
+	position: absolute;
+	top:30px;
+	left:0;
+	/*background: #eee;*/
+	padding:20px 30px 5px 15px;
+	width: 20%;
+	min-width: 280px;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.overlay h1, .overlay p {
+	color: #fff;
+}
+.photo-icon{
+	background: #555;
+	border:solid white 4px;
+}
+.photoFrame{
+	display: inline-block;
+	width:200px;
+	height:200px;
+	overflow: hidden;
+	line-height: 170px;
+	background: #555;
+	border:solid white 10px;
+	color:#CCC;
+	text-align: center;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.photoFrame img {
+	width:100%;
+}
+.leaflet-popup-content .photoFrame{
+	height: auto;
+}
+.strapline{
+	display: none;
+}
+
+/** Home page **/
+
+.home .overlay{
+	background: none;
+	left:0;
+	transition: left 0.4s ease;
+}
+.home .overlay.hide{
+	display: block;
+	left:-410px;
+}
+.home .subjects{
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	/*background: #333;*/
+}
+.home .subjects .maths{
+	background-color: rgb(51, 153, 51);
+}
+.home .subject{
+	color: #fefefe;
+	background-color: rgb(204, 51, 0);
+
+	opacity: 0.8;
+	transition: opacity 1s ease;
+}
+.home .subject:hover{
+	opacity: 1;
+}
+.home .subject h2{
+	padding: 0px 15px;
+	display: inline-block;
+	font-size: 1.7em;
+}
+
+/** Tutor page **/
+
+.tutor .overlay h1 {
+	font-weight: normal;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	max-width: 100%;
+	overflow: hidden;
+}
+.tutor .overlay h1 strong {
+	display: inline-block;
+	width: 2.5em;
+	color: #ccc;
+	font-weight: normal;
+	text-align: right;
+}
+.tutor .overlay h1 span {
+	font-weight: normal;
+}
+
+/** Bootstrap tweaks **/
+
+.twitter-typeahead {
+	width: 100%;
+}
+.twitter-typeahead .tt-query:not(:first-child):not(:last-child) {
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+}
+.twitter-typeahead .tt-query,
+.twitter-typeahead .tt-hint {
+  margin-bottom: 0;
+}
+
+.tt-dropdown-menu {
+  min-width: 160px;
+  margin-top: 2px;
+  padding: 5px 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0,0,0,.2);
+  *border-right-width: 2px;
+  *border-bottom-width: 2px;
+  -webkit-border-radius: 6px;
+     -moz-border-radius: 6px;
+          border-radius: 6px;
+  -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+     -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+          box-shadow: 0 5px 10px rgba(0,0,0,.2);
+  -webkit-background-clip: padding-box;
+     -moz-background-clip: padding;
+          background-clip: padding-box;
+}
+
+.tt-suggestion {
+  display: block;
+  padding: 3px 20px;
+}
+
+.tt-suggestion.tt-is-under-cursor {
+  color: #fff;
+  background-color: #0081c2;
+  background-image: -moz-linear-gradient(top, #0088cc, #0077b3);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0088cc), to(#0077b3));
+  background-image: -webkit-linear-gradient(top, #0088cc, #0077b3);
+  background-image: -o-linear-gradient(top, #0088cc, #0077b3);
+  background-image: linear-gradient(to bottom, #0088cc, #0077b3);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0077b3', GradientType=0)
+}
+
+.tt-suggestion.tt-is-under-cursor a {
+  color: #fff;
+}
+
+.tt-suggestion p {
+  margin: 0;
+	font-weight: 400;
+	color: #444;
+}
+.tt-suggestion.tt-is-under-cursor p {
+  color: #fff;
+}
+
+
+@media only screen and (min-width: 768px) {
+	/* Style adjustments for viewports that meet the condition */
+	.home .strapline{
+		display: block;
+	}
+
+	.overlay{
+		top:100px;
+	}
+
+	#map:after, .overlay {
+		min-width: 350px;
+	}
+}

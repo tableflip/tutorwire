@@ -1,0 +1,30 @@
+<template name="home">
+<div id="map"></div>
+{{> header }}
+<div class="overlay hide">
+  <form id="searchForm">
+    <div class="form-group">
+      <label>Find someone to help you learn</label>
+      <div class="input-group">
+        <input tabindex="1" id="subject" class="form-control" type="text" name="subject" autocomplete="off">
+        <span class="input-group-btn">
+          <button id="search" class="btn btn-default" type="button" title="Find tutors!"><i class="glyphicon glyphicon-search"></i></button>
+        </span>
+      </div>
+    </div><!--/.form-group-->
+    <div class="form-group">
+      <label>Near</label>
+      <div class="input-group">
+        <input tabindex="2" id="place" class="form-control" type="text" name="place" autocomplete="off" data-provide="typeahead">
+        <span class="input-group-btn">
+          <button id="findme" class="btn btn-default" type="button" title="Look up current location"><i class="glyphicon glyphicon-screenshot"></i> Find me</button>
+        </span>
+      </div>
+    </div><!--/.form-group-->
+    <div>
+      <label>&nbsp;</label>
+      <button id="find" tabindex="3" class="btn">Find tutors</button>
+    </div>
+  </form>
+</div>
+</template>
