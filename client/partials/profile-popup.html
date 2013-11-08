@@ -1,0 +1,7 @@
+<template name="profilePopup">
+  <div class="photoFrame">
+    <img src="{{#if photo.url}}{{photo.url}}{{else}}//www.gravatar.com/avatar?s=400&d=mm{{/if}}" alt="Profile photo for {{name}}"/>
+  </div>
+  <p>Learn {{subject}} with {{name}}</p>
+  <a class="btn btn-default" href="/tutor/{{puid}}">View profile</a>
+</template>

@@ -3,5 +3,9 @@ Meteor.publish("subjects", function () {
 })
 
 Meteor.publish("city-locations", function (country) {
-  return CityLocations.find({country: country || "UK"}, {sort: [["name", "ASC"]]})
+  return CityLocations.findByCountry(country)
+})
+
+Meteor.publish("tutors-for-subject", function (subject) {
+  return Tutors.findBySubject(subject)
 })
