@@ -1,22 +1,43 @@
 HomeController = RouteController.extend({
   template: "home",
 
+  waitOn: function () {
+    console.log("waitOn")
+    return Meteor.subscribe("subjects")
+  },
+
   before: function () {
+    console.log("before")
+    Meteor.subscribe("tutors-for-subject", Session.get("subject"))
+    Meteor.subscribe("city-locations", Session.get("city"))
   },
 
   data: function () {
+    console.log("data")
     var data = {bodyClass: "home"}
     return data
   },
 
   after: function () {
-    var subject = Session.get("subject")
-    Meteor.subscribe("tutors-for-subject", subject)
-    App.showTutorsOnMap(Tutors.findBySubject(subject).fetch())
+    console.log(Subjects.find().fetch())
+
+    if (Subjects.find().count()) {
+
+      $("#subject").typeahead({
+        name: "subjects",
+        local: Subjects.find().fetch().map(function (s) { return s.name })
+      })
+
+      // Style tt-hint like a form-control
+      $(".tt-hint").addClass("form-control")
+    }
+
+    App.showTutorsOnMap(Tutors.findBySubject(Session.get("subject")).fetch())
   },
 
   unload: function () {
     Session.set("subject", null)
+    Session.set("city", null)
     App.map.remove()
     App.map = null
   }
@@ -30,10 +51,12 @@ function search (event) {
     return subject.focus()
   }
 
-  Session.set("subject", subject)
+  Session.set("subject", subject.val())
 }
 
 Template.home.events({
+  "change #subject": search,
+  "typeahead:selected #subject": search,
   "submit #searchForm": search,
   "click #search": search,
   "click #findme": function () {
@@ -47,5 +70,4 @@ Template.home.events({
 Template.home.rendered = function () {
   App.initMap()
   $(".hide").removeClass("hide")
-  $("#subject").unbind("typeahead:selected").typeahead("destroy")
 }
