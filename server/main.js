@@ -10,6 +10,14 @@ Meteor.publish("tutors-for-subject", function (subject) {
   return Tutors.findBySubject(subject)
 })
 
+Meteor.publish("tutor-by-id", function (id) {
+  return Tutors.find({_id: id})
+})
+
+Meteor.publish("tutor-by-puid", function (puid) {
+  return Tutors.find({puid: puid})
+})
+
 Tutors.allow({
   insert: function (userId, tutor) {
     tutor.puid = shortid.generate()
