@@ -1,0 +1,1 @@
+shortid = Npm.require("shortid")

@@ -9,3 +9,10 @@ Meteor.publish("city-locations", function (country) {
 Meteor.publish("tutors-for-subject", function (subject) {
   return Tutors.findBySubject(subject)
 })
+
+Tutors.allow({
+  insert: function (userId, tutor) {
+    tutor.puid = shortid.generate()
+    return true
+  }
+})
