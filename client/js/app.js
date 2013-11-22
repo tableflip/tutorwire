@@ -28,7 +28,7 @@ App = {
 
   showUserMarker: function(location) {
     if (App.userMarker){
-      App.map.removeLayer(app.userMarker)
+      App.map.removeLayer(App.userMarker)
     }
 
     var icon = L.AwesomeMarkers.icon({
@@ -37,7 +37,7 @@ App = {
 
     App.userMarker = L.marker(location.coords, {icon: icon, title: 'You are here'})
     
-    App.userMarker.addTo(app.map)
+    App.userMarker.addTo(App.map)
 
     App.map.setView(location.coords, 11)
   },
