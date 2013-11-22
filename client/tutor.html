@@ -1,0 +1,14 @@
+<template name="tutor">
+  {{#constant}}<div id="map"></div>{{/constant}}
+  {{> header }}
+  <div class="overlay tutor">
+    <div id="photoDropTarget" class="photoFrame"></div>
+    <h1>
+      <strong>Learn</strong> <span id="tutor-subject">{{subject}}</span><br>
+      <strong>with</strong> <span id="tutor-name">{{name}}</span><br>
+      <strong>near</strong> <span id="tutor-location-name">{{place}}</span>
+    </h1>
+    <br/>
+    <a id="tutor-contact" class="btn btn-default" href="#" target="_blank"><span class="glyphicon glyphicon-envelope"></span> Get in Contact</a>
+  </div>
+</template>
