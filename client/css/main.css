@@ -111,13 +111,12 @@ label{
 
 /** Home page **/
 
-.home .overlay{
+.home .overlay {
 	background: none;
-	left:0;
 	transition: left 0.4s ease;
 }
-.home .overlay.hide{
-	display: block;
+.home .overlay.hide {
+	display: block !important;
 	left:-410px;
 }
 .home .subjects{

@@ -52,6 +52,10 @@ JoinController = RouteController.extend({
 
     // Style tt-hint like a form-control
     $(".tt-hint").addClass("form-control")
+  },
+
+  unload: function () {
+    App.clearMarkers()
   }
 })
 
