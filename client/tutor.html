@@ -2,11 +2,11 @@
   {{#constant}}<div id="map"></div>{{/constant}}
   {{> header }}
   <div class="overlay tutor">
-    <div id="photoDropTarget" class="photoFrame"></div>
+    <div id="photoDropTarget" class="photoFrame"><img src="{{#if photo}}{{photo.url}}{{else}}http://www.gravatar.com/avatar?s=400&d=mm{{/if}}" alt="Profile photo for {{name}}"/></div>
     <h1>
       <strong>Learn</strong> <span id="tutor-subject">{{subject}}</span><br>
       <strong>with</strong> <span id="tutor-name">{{name}}</span><br>
-      <strong>near</strong> <span id="tutor-location-name">{{place}}</span>
+      <strong>near</strong> <span id="tutor-location-name">{{location.name}}</span>
     </h1>
     <br/>
     <a id="tutor-contact" class="btn btn-default" href="#" target="_blank"><span class="glyphicon glyphicon-envelope"></span> Get in Contact</a>
