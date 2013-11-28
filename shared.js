@@ -13,3 +13,7 @@ Tutors.findBySubject = function (subject) {
   console.log("Finding tutors by subject", subject)
   return Tutors.find({subject: new RegExp(subject, "gi")}, {sort: [["name", "ASC"]]})
 }
+
+Tutors.findByPuid = function (puid) {
+  return Tutors.findOne({puid: puid})
+}

@@ -1,24 +1,12 @@
 HomeController = RouteController.extend({
   template: "home",
 
-  waitOn: function () {
-    Session.set("country", "UK") // TODO: Localise
-    return [Meteor.subscribe("subjects"), Meteor.subscribe("city-locations", Session.get("country"))]
-  },
-
   before: function () {
     Meteor.subscribe("tutors-for-subject", Session.get("subject"))
-  },
 
-  data: function () {
-    return {bodyClass: "home"}
-  },
-
-  after: function () {
-    var subjects = Subjects.find()
-
-    if (subjects.count()) {
-      var subjectInput = $("#subject")
+    Meteor.subscribe("subjects", function () {
+      var subjects = Subjects.find()
+        , subjectInput = $("#subject")
 
       if (subjectInput.data("typeahead")) {
         subjectInput.unbind("typeahead:selected").typeahead("destroy")
@@ -31,15 +19,19 @@ HomeController = RouteController.extend({
         })
         .on("typeahead:selected", onSubjectChange)
         .data("typeahead", true)
-    }
 
-    var locations = CityLocations.findByCountry(Session.get("country"))
+      // Style tt-hint like a form-control
+      $(".tt-hint").addClass("form-control")
+    })
 
-    if (locations.count()) {
-      var placeInput = $("#place")
+    Session.set("country", "UK") // TODO: Localise
+
+    Meteor.subscribe("city-locations", Session.get("country"), function () {
+      var locations = CityLocations.findByCountry(Session.get("country"))
+        , placeInput = $("#place")
 
       if (placeInput.data("typeahead")) {
-        subjectInput.unbind("typeahead:selected").typeahead("destroy")
+        placeInput.unbind("typeahead:selected").typeahead("destroy")
       }
 
       placeInput
@@ -49,26 +41,30 @@ HomeController = RouteController.extend({
         })
         .on("typeahead:selected", onPlaceChange)
         .data("typeahead", true)
-    }
 
-    // Style tt-hint like a form-control
-    $(".tt-hint").addClass("form-control")
+      // Style tt-hint like a form-control
+      $(".tt-hint").addClass("form-control")
+    })
+  },
 
+  data: function () {
+    return {bodyClass: "home"}
+  },
+
+  after: function () {
+    App.clearMarkers()
     App.showTutorsOnMap(Tutors.findBySubject(Session.get("subject")).fetch())
   },
 
   unload: function () {
-    Session.set("subject", null)
-    Session.set("country", null)
-    App.map.remove()
-    App.map = null
+    App.clearMarkers()
   }
 })
 
 function onSubjectChange (event) {
   event.preventDefault()
   var subject = $("#subject")
-  
+
   if (!subject.val()) {
     return subject.focus()
   }
@@ -120,9 +116,8 @@ Template.home.events({
 })
 
 Template.home.rendered = function () {
-  App.initMap()
   $(".hide").removeClass("hide")
-  
+
   setTimeout(function () {
     App.type("Maths",
       function (chars) { $("#subject").attr("placeholder", chars) },

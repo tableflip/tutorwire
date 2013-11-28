@@ -52,12 +52,6 @@ JoinController = RouteController.extend({
 
     // Style tt-hint like a form-control
     $(".tt-hint").addClass("form-control")
-  },
-
-  unload: function () {
-    Session.set("country", null)
-    App.map.remove()
-    App.map = null
   }
 })
 
@@ -107,7 +101,7 @@ Template.join.events({
 })
 
 Template.join.rendered = function () {
-  var map = App.initMap()
+  var map = App.map
 
   map.on("locationfound", function (event) {
     showPlace("Unknown", event.latlng)

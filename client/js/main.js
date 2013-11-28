@@ -1,3 +1,7 @@
+Meteor.startup(function () {
+  App.initMap()
+})
+
 Router.configure({layoutTemplate: 'layout'})
 
 Router.map(function () {
