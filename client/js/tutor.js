@@ -23,8 +23,9 @@ TutorController = RouteController.extend({
         body: "Hi, I'm looking to learn " + tutor.subject + " and I found your profile on tutorwire.com"
       }))
 
-      var latlng = new L.LatLng(tutor.location.coords.lat, tutor.location.coords.lng)
-      App.map.setView(latlng, 8)
+      var lngLat = tutor.location.geometry.coordinates
+
+      App.map.setView([lngLat[1], lngLat[0]], 8)
     }
   },
 

@@ -134,8 +134,10 @@ Template.join.rendered = function () {
         , name: $('#name').val()
         , email: $('#email').val()
         , subject: $('#subject').val()
-        , location: App.location
+        , location: L.marker([App.location.coords.lat, App.location.coords.lng]).toGeoJSON()
       }
+
+      tutor.location.properties.name = App.location.name
 
       Tutors.insert(tutor, function (er, id) {
         if (er) return console.error("Failed to create tutor profile", er)

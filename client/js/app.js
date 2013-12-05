@@ -94,7 +94,8 @@ App = {
       })
     }
 
-    var marker = L.marker(tutor.location.coords, {
+    var lngLat = tutor.location.geometry.coordinates
+    var marker = L.marker([lngLat[1], lngLat[0]], {
       title: tutor.name,
       icon: icon
     })
