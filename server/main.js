@@ -1,3 +1,7 @@
+Meteor.publish("userData", function () {
+  return Meteor.users.find({_id: this.userId}, {fields: {'messages': 1}});
+})
+
 Meteor.publish("subjects", function () {
   return Subjects.find({}, {sort: [["name", "ASC"]]})
 })

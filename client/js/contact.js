@@ -12,12 +12,16 @@ ContactController = RouteController.extend({
 
     after: function () {
         var tutor = Tutors.findByPuid(Session.get("tutor-puid"))
-
     }
 })
 
 Template.contact.events({
-
+    'click #tutor-contact':function (evt) {
+      evt.preventDefault()
+      var tutor = Tutors.findByPuid(Session.get("tutor-puid"))
+      Meteor.call('contact', tutor.userId, 'Please can has?')
+      $(this).addClass('disabled')
+    }
 })
 
 Template.contact.rendered = function () {
@@ -53,7 +57,6 @@ Template.registerToContact.rendered = function () {
 
             Accounts.createUser(opts, function (er) {
                 if (er) return console.log(er)
-                console.log("Go contact them")
             })
 
         }
