@@ -35,7 +35,7 @@ App = {
       color: 'orange'
     })
 
-    App.userMarker = L.marker(location.coords, {icon: icon, title: 'You are here'})
+    App.userMarker = L.marker(location.coords, {icon: icon, title: 'You are here', bounceOnAdd: true})
 
     App.userMarker.addTo(App.map)
 
@@ -97,7 +97,8 @@ App = {
     var lngLat = tutor.location.geometry.coordinates
     var marker = L.marker([lngLat[1], lngLat[0]], {
       title: tutor.name,
-      icon: icon
+      icon: icon,
+      bounceOnAdd: true
     })
 
     marker.bindPopup(Template.profilePopup(tutor))
@@ -108,6 +109,12 @@ App = {
   },
 
   normalizeCoords: function (coords) {
+    if (coords.geometry) {
+      return {
+        lat: coords.geometry.coordinates[1],
+        lng: coords.geometry.coordinates[0]
+      }
+    }
     return {
       lat: App.trimTo(coords.lat, 6),
       lng: App.trimTo(coords.lng, 6)
