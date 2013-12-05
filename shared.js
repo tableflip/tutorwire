@@ -11,9 +11,7 @@ Tutors = new Meteor.Collection("tutors")
 
 Tutors.findBySubject = function (subject) {
   console.log("Finding tutors by subject", subject)
-  var tutors = Tutors.find({subject: new RegExp(subject, "gi")}, {sort: [["name", "ASC"]]})
-  console.log("Found", tutors.count(), "of", Tutors.find().count())
-  return tutors
+  return Tutors.find({subject: new RegExp(subject, "gi")}, {sort: [["name", "ASC"]]})
 }
 
 Tutors.findByPuid = function (puid) {
