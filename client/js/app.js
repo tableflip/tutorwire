@@ -108,6 +108,12 @@ App = {
   },
 
   normalizeCoords: function (coords) {
+    if (coords.geometry) {
+      return {
+        lat: coords.geometry.coordinates[1],
+        lng: coords.geometry.coordinates[0]
+      }
+    }
     return {
       lat: App.trimTo(coords.lat, 6),
       lng: App.trimTo(coords.lng, 6)
