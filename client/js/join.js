@@ -52,6 +52,10 @@ JoinController = RouteController.extend({
 
     // Style tt-hint like a form-control
     $(".tt-hint").addClass("form-control")
+  },
+
+  unload: function () {
+    App.clearMarkers()
   }
 })
 
@@ -130,8 +134,10 @@ Template.join.rendered = function () {
         , name: $('#name').val()
         , email: $('#email').val()
         , subject: $('#subject').val()
-        , location: App.location
+        , location: L.marker([App.location.coords.lat, App.location.coords.lng]).toGeoJSON()
       }
+
+      tutor.location.properties.name = App.location.name
 
       if (!isRegistered(tutor.email)){ // create a user then create a tutor
 

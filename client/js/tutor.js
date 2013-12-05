@@ -16,8 +16,9 @@ TutorController = RouteController.extend({
     if (tutor) {
       App.clearMarkers()
       App.showTutorOnMap(tutor)
-      var latlng = new L.LatLng(tutor.location.coords.lat, tutor.location.coords.lng)
-      App.map.setView(latlng, 8)
+        
+      var lngLat = tutor.location.geometry.coordinates
+      App.map.setView([lngLat[1], lngLat[0]], 8)
     }
   },
 

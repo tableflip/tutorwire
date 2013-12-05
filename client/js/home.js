@@ -118,17 +118,30 @@ Template.home.events({
 })
 
 Template.home.rendered = function () {
-  $(".hide").removeClass("hide")
+
+  var subject = $("#subject")
+      , place = $("#place")
+
+  if (Session.get("subject")) {
+    subject.val(Session.get("subject"))
+  }
+
+  if (Session.get("country") != "UK") {
+    place.val(Session.get("country"))
+  }
 
   setTimeout(function () {
-    App.type("Maths",
-      function (chars) { $("#subject").attr("placeholder", chars) },
-      function ()  {
-        App.type("UK",
-          function (chars) { $("#place").attr("placeholder", chars) },
-          function ()  { $("#subject").focus() }
-        )
-      }
-    )
+    $(".hide").removeClass("hide")
+    setTimeout(function () {
+      App.type("Maths",
+        function (chars) { subject.attr("placeholder", chars) },
+        function ()  {
+          App.type("UK",
+            function (chars) { place.attr("placeholder", chars) },
+            function ()  { subject.focus() }
+          )
+        }
+      )
+    }, 500)
   }, 500)
 }
