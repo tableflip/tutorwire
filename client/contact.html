@@ -1,0 +1,36 @@
+<template name="contact">
+  {{> header }}
+  <div class="overlay tutor">
+    <div id="photoDropTarget" class="photoFrame"><img src="{{#if photo}}{{photo.url}}{{else}}http://www.gravatar.com/avatar?s=400&d=mm{{/if}}" alt="Profile photo for {{name}}"/></div>
+    <h1>Contact <span id="tutor-name">{{name}}</span></h1>
+    <br/>
+    {{#if currentUser}}
+      <div class="contactMessage">
+        <p>Hi {{name}},</p>
+        <p>I live near {{location.name}} & I'd like to learn {{subject}}.</p>
+        <p>Please let me know if you're available.</p>
+        <p>{{currentUser.profile.name}}</p>
+        <a id="tutor-contact" class="btn btn-default" href="#" target="_blank"><span class="glyphicon glyphicon-envelope"></span> Send</a>
+      </div>
+    {{else}}
+      <p>We need to know who you are first</p>
+      {{> registerToContact}}
+    {{/if}}
+  </div>
+</template>
+
+<template name="registerToContact">
+  <form action="">
+    <div class="form-group">
+      <input type="text" placeholder="Name" name="name" id="name" class="form-control validate[required]">
+    </div>
+    <div class="form-group">
+      <input type="email" placeholder="your@email.address" name="email" id="email" class="form-control validate[required,custom[email]]">
+    </div>
+    <div class="form-group">
+      <input type="text" placeholder="Password" name="password" id="password" class="form-control validate[required]" autocomplete="off">
+    </div>
+    <input id="register" type="submit" class="btn btn-primary" value="Register" />
+    <button id="login" type="button" class="btn btn-link">Or log in</button>
+  </form>
+</template>

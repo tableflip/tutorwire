@@ -133,18 +133,47 @@ Template.join.rendered = function () {
         , location: App.location
       }
 
-      Tutors.insert(tutor, function (er, id) {
-        if (er) return console.error("Failed to create tutor profile", er)
+      if (!isRegistered(tutor.email)){ // create a user then create a tutor
 
-        Meteor.subscribe("tutor-by-id", id, function (er) {
-          if (er) return console.error("Failed to subscribe to tutor-by-id", er)
-          Router.go("/tutor/" + Tutors.findOne({_id: id}).puid)
+        Accounts.createUser({
+          email: tutor.email,
+          password: $('#password').val(),
+          profile:{
+            name: tutor.name,
+            location: tutor.location,
+            photo: App.photo
+          }
+        }, function (er) {
+          if (er) return console.log(er)
+          createTutorAndView(tutor)
         })
-      })
+
+      } else { // try and log in with the credentials, then create the tutor
+
+        Meteor.loginWithPassword(tutor.email, $('#password'.val()), function(er){
+
+          if (er) return console.log(er)
+
+          createTutorAndView(tutor)
+        })
+      }
+
+      return false
     }
   })
 
   addPhotoDropTarget()
+}
+
+function createTutorAndView (tutor) {
+  Tutors.insert(tutor, function (er, id) {
+    if (er) return console.error("Failed to create tutor profile", er)
+
+    Meteor.subscribe("tutor-by-id", id, function (er) {
+      if (er) return console.error("Failed to subscribe to tutor-by-id", er)
+      Router.go("/tutor/" + Tutors.findOne({_id: id}).puid)
+    })
+  })
 }
 
 function addPhotoDropTarget () {
@@ -172,4 +201,8 @@ function addPhotoDropTarget () {
       target.text("Uploading (" + percentage + "%)")
     }
   })
+}
+
+function isRegistered (email) {
+  return Meteor.users.find({ emails: email }).count() > 0
 }

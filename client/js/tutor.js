@@ -16,13 +16,6 @@ TutorController = RouteController.extend({
     if (tutor) {
       App.clearMarkers()
       App.showTutorOnMap(tutor)
-
-      $("#tutor-contact").attr("href", App.mailto({
-        email: tutor.email,
-        subject: "I'd like to learn " + tutor.subject,
-        body: "Hi, I'm looking to learn " + tutor.subject + " and I found your profile on tutorwire.com"
-      }))
-
       var latlng = new L.LatLng(tutor.location.coords.lat, tutor.location.coords.lng)
       App.map.setView(latlng, 8)
     }
@@ -31,4 +24,11 @@ TutorController = RouteController.extend({
   unload: function () {
     App.clearMarkers()
   }
+})
+
+Template.tutor.events({
+    "click #tutor-contact": function (evt) {
+        Router.go('contact', { puid: Session.get("tutor-puid")})
+        return false
+    }
 })

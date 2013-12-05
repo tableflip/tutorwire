@@ -18,7 +18,7 @@ App = {
       minZoom: 6
     })
 
-    map.zoomControl.setPosition('topright')
+    map.zoomControl.setPosition('bottomright')
     map.setView([55, -6], 6)
 
     return map

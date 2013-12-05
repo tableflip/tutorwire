@@ -112,7 +112,9 @@ Template.home.events({
       App.showUserMarker(location)
       $('#place').val(location.name)
     })
-  }
+  },
+  "click #join": function () { Router.go('join') },
+  "click #about": function () { Router.go('about') }
 })
 
 Template.home.rendered = function () {

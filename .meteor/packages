@@ -9,3 +9,5 @@ iron-router
 jquery
 bootstrap-3
 shortid
+accounts-password
+accounts-ui-bootstrap-3
