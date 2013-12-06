@@ -10,3 +10,5 @@ Router.map(function () {
   this.route("tutor", {path: "/tutor/:puid", controller: TutorController})
   this.route("contact", {path: "/tutor/:puid/contact", controller: ContactController})
 })
+
+Meteor.subscribe("userData");
