@@ -46,6 +46,10 @@ Meteor.methods({
       return Math.floor(Math.random() * (max - min + 1) + min)
     }
 
+    function randomArbitrary(min, max) {
+      return Math.random() * (max - min) + min
+    }
+
     function randomName () {
       return ProperNames[randomInt(0, ProperNames.length - 1)]
     }
@@ -62,8 +66,8 @@ Meteor.methods({
         geometry: {
           type: "Point",
           coordinates: [
-            nearCity.location.geometry.coordinates[0] + randomInt(-1, 1),
-            nearCity.location.geometry.coordinates[1] + randomInt(-1, 1)
+            nearCity.location.geometry.coordinates[0] + randomArbitrary(-1, 1),
+            nearCity.location.geometry.coordinates[1] + randomArbitrary(-1, 1)
           ]
         }
       }

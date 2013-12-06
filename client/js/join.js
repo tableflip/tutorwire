@@ -59,21 +59,12 @@ JoinController = RouteController.extend({
   }
 })
 
-var placeMarker = null
-
 function showPlace (name, coords) {
   console.log('Showing', name, coords)
 
-  if (placeMarker) {
-    App.map.removeLayer(placeMarker)
-  }
-
-  placeMarker = L.marker(coords)
-  placeMarker.addTo(App.map)
-
-  App.map.setView(coords, 8)
-
   App.location = {name: name, coords: App.normalizeCoords(coords)}
+
+  App.showUserMarker(App.location)
 }
 
 function onPlaceChange () {
