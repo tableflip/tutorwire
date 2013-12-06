@@ -14,8 +14,8 @@ TutorController = RouteController.extend({
     var tutor = Tutors.findByPuid(Session.get("tutor-puid"))
 
     if (tutor) {
-      App.clearMarkers()
-      App.showTutorOnMap(tutor)
+      App.clearExitingMarkers([tutor])
+      App.showEnteringTutorsOnMap([tutor])
 
       var lngLat = tutor.location.geometry.coordinates
       App.map.setView([lngLat[1], lngLat[0]], App.map.getZoom())

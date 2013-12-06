@@ -52,8 +52,9 @@ HomeController = RouteController.extend({
   },
 
   after: function () {
-    App.clearMarkers()
-    App.showTutorsOnMap(Tutors.findBySubject(Session.get("subject")).fetch())
+    var tutors = Tutors.findBySubject(Session.get("subject")).fetch()
+    App.clearExitingMarkers(tutors)
+    App.showEnteringTutorsOnMap(tutors)
   },
 
   unload: function () {

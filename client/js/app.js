@@ -66,19 +66,48 @@ App = {
     App.map.locate()
   },
 
-  markers: [],
+  markers: {},
 
   clearMarkers: function () {
     console.log('Clearing markers', App.markers)
-    while (App.markers.length) {
-      App.map.removeLayer(App.markers.pop())
-    }
+    Object.keys(App.markers).forEach(function (tutorId) {
+      App.map.removeLayer(App.markers[tutorId])
+    })
+    App.markers = {}
+  },
+
+  /**
+   * Clear markers on the map that don't belong to one of the tutors in the provided list
+   * @param tutors
+   */
+  clearExitingMarkers: function (tutors) {
+    var tutorIds = tutors.map(function (t) { return t._id })
+
+    Object.keys(App.markers).forEach(function (tutorId) {
+      if (tutorIds.indexOf(tutorId) == -1) {
+        App.map.removeLayer(App.markers[tutorId])
+        delete App.markers[tutorId]
+      }
+    })
   },
 
   showTutorsOnMap: function (tutors) {
     console.log('Showing tutors on map', tutors)
     for (var i = 0; i < tutors.length; i++) {
       App.showTutorOnMap(tutors[i])
+    }
+  },
+
+  /**
+   * Show tutors on the map that don't already have a marker.
+   * @param tutors
+   */
+  showEnteringTutorsOnMap: function (tutors) {
+    console.log('Showing entering tutors on map', tutors)
+    for (var i = 0; i < tutors.length; i++) {
+      if (!App.markers[tutors[i]._id]) {
+        App.showTutorOnMap(tutors[i])
+      }
     }
   },
 
@@ -105,7 +134,7 @@ App = {
 
     marker.addTo(App.map)
 
-    App.markers.push(marker)
+    App.markers[tutor._id] = marker
   },
 
   normalizeCoords: function (coords) {
