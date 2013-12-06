@@ -130,7 +130,7 @@ App = {
       bounceOnAdd: true
     })
 
-    marker.bindPopup(Template.profilePopup(tutor))
+    marker.bindPopup(Template.profilePopup(tutor), {maxWidth: 200})
 
     marker.addTo(App.map)
 
