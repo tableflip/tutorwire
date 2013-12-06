@@ -1,5 +1,10 @@
 Meteor.startup(function () {
   App.initMap()
+
+  var getIconUrl = L.Icon.Default.prototype._getIconUrl
+  L.Icon.Default.prototype._getIconUrl = function (name) {
+    return name == "icon" ? "/images/marker-icon.svg" : getIconUrl.call(this, name)
+  }
 })
 
 Router.configure({layoutTemplate: 'layout'})

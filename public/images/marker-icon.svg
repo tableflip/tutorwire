@@ -1,0 +1,18 @@
+<svg width="25" height="40" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <linearGradient id="b">
+   <stop stop-color="#ea2d23" offset="0"/>
+   <stop stop-color="#951509" offset="1"/>
+  </linearGradient>
+  <linearGradient id="a">
+   <stop stop-color="#f15a2f" offset="0"/>
+   <stop stop-color="#e68c2c" offset="1"/>
+  </linearGradient>
+  <linearGradient y2="-0.00468" x2="0.49812" y1="0.97145" x1="0.49812" id="c" xlink:href="#a"/>
+  <linearGradient y2="-0.00468" x2="0.41592" y1="0.4904" x1="0.41592" id="d" xlink:href="#b"/>
+ </defs>
+ <g>
+  <rect id="svg_2" fill="#fff" width="12.625" height="14.5" x="7" y="7"/>
+  <path id="svg_3" stroke-linecap="round" stroke-width="1.1" stroke="url(#d)" fill="url(#c)" d="m12.59399,0.54871c-6.573,0 -12.04401,5.69101 -12.04401,11.86603c0,2.77795 1.564,6.30798 2.694,8.74597l9.306,17.87201l9.26202,-17.87201c1.12997,-2.43799 2.73798,-5.79102 2.73798,-8.74597c0,-6.17502 -5.383,-11.86603 -11.95599,-11.86603zm0,7.155c2.58401,0.017 4.67902,2.12198 4.67902,4.70999s-2.095,4.66302 -4.67902,4.67902c-2.58398,-0.01703 -4.67899,-2.09003 -4.67899,-4.67902c0,-2.58801 2.095,-4.69299 4.67899,-4.70999z"/>
+ </g>
+</svg>
