@@ -72,8 +72,14 @@ header h2{
 	position: absolute;
 }
 #map .leaflet-container a,
-#map .leaflet-popup a{
-    color:#fff;
+#map .leaflet-popup a {
+	color: #fff;
+}
+#map .leaflet-popup a.leaflet-popup-close-button {
+  color: #ccc;
+}
+#map .leaflet-popup a.leaflet-popup-close-button:hover {
+  color: #999;
 }
 
 body{
