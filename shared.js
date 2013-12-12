@@ -18,32 +18,89 @@ Tutors.findByPuid = function (puid) {
   return Tutors.findOne({puid: puid})
 }
 
-/*
-messages:[
-{
-  timestamp: '',
-  from: userId,
-  text: 'woo',
+Conversations = new Meteor.Collection("conversations")
+
+Conversations.sendMessage = function (recipientId, text, cb) {
+  Meteor.call("sendMessage", recipientId, text, cb)
 }
-]
-*/
+
 Meteor.methods({
-  contact: function (recipientId, text) {
+  sendMessage: function (recipientId, text) {
     if (!recipientId) throw new Meteor.Error(400, 'No recipient id')
-    var message = { text: text }
-    if (this.isSimulation) {
-      message.timestamp = Date.now()
-      message.to = recipientId
-      Meteor.users.update(this.userId, {$push: { messages: message }}, function (er) {
-        console.error(er)
-      })
-    } else {
-      message.timestamp = Date.now()
-      message.from = this.userId
-      Meteor.users.update(recipientId, {$push: { messages: message }}, function (er) {
-        console.error(er)
-      })
+
+    var message = {
+      text: text,
+      by: this.userId,
+      created: Date.now()
     }
-    console.log('Message', message)
+
+    var conv = null
+      , sender = null
+      , recipient = null
+
+    if (Meteor.isClient()) {
+      // Get the conversation if exists
+      conv = Conversations.findOne({owner: this.userId, users: {$elemMatch: {userId: recipientId}}})
+
+      // Create if not
+      if (!conv) {
+        sender = Meteor.users.findOne(this.userId)
+
+        if (!sender) throw new Meteor.Error(401, "Login to send messages")
+
+        conv = {
+          owner: sender._id,
+          users: [{
+            userId: sender._id,
+            name: sender.name,
+            avatar: sender.avatar
+          }, {
+            // Add in the user ID and wait for the server to update the doc
+            // with additional user details the client is allowed to see
+            userId: recipientId
+          }],
+          messages: [message],
+          updated: Date.now()
+        }
+
+        Conversations.insert(conv)
+      } else {
+        Conversations.update(conv._id, {$push: {messages: message}})
+      }
+
+    } else {
+      // Get the reverse conversation if exists
+      conv = Conversations.findOne({owner: recipientId, users: {$elemMatch: {userId: this.userId}}})
+
+      // Create if not
+      if (!conv) {
+        recipient = Meteor.users.findOne(recipientId)
+
+        if (!recipient) throw new Meteor.Error(404, "Recipient not found")
+
+        sender = Meteor.users.findOne(this.userId)
+
+        if (!sender) throw new Meteor.Error(401, "Login to send messages")
+
+        conv = {
+          owner: recipientId,
+          users: [{
+            userId: sender._id,
+            name: sender.name,
+            avatar: sender.avatar
+          }, {
+            userId: recipientId,
+            name: recipient.name,
+            avatar: recipient.avatar
+          }],
+          messages: [message],
+          updated: Date.now()
+        }
+
+        Conversations.insert(conv)
+      } else {
+        Conversations.update(conv._id, {$push: {messages: message}})
+      }
+    }
   }
 })

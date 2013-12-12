@@ -1,5 +1,5 @@
 Meteor.publish("userData", function () {
-  return Meteor.users.find({_id: this.userId}, {fields: {'messages': 1}});
+  return Meteor.users.find({_id: this.userId})
 })
 
 Meteor.publish("subjects", function () {
@@ -22,9 +22,43 @@ Meteor.publish("tutor-by-puid", function (puid) {
   return Tutors.find({puid: puid})
 })
 
+Meteor.publish("conversations", function () {
+  // You only get to see your own conversations
+  return Conversations.find({owner: this.userId}, {sort: [["updated", "DESC"]]})
+})
+
 Tutors.allow({
   insert: function (userId, tutor) {
+    if (!userId) return false
+    tutor.userId = userId
     tutor.puid = shortid.generate()
+    return true
+  }
+})
+
+Conversations.allow({
+  insert: function (userId, doc) {
+    if (!userId) return false
+
+    doc.owner = userId
+    doc.users = doc.users || []
+    doc.messages = doc.messages || []
+
+    // Fill in the user details the client is allowed to see
+    doc.users.forEach(function (u) {
+      var user = Meteor.users.findOne(u.userId)
+      if (!user) return console.warn("Cannot converse with", u.userId, "is not exists!")
+      u.name = user.name
+      u.avatar = user.avatar
+    })
+
+    doc.updated = Date.now()
+    return true
+  },
+  update: function (userId, doc) {
+    // Only update your own conversations
+    if (!Conversations.findOne({_id: doc._id, owner: userId})) return false
+    doc.updated = Date.now()
     return true
   }
 })

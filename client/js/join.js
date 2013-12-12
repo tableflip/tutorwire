@@ -165,8 +165,6 @@ Template.join.rendered = function () {
 function createTutorAndView (tutor) {
   if (!Meteor.userId) return console.error('Must be logged in to create a tutor profile')
 
-  tutor.userId = Meteor.userId()
-
   Tutors.insert(tutor, function (er, id) {
     if (er) return console.error("Failed to create tutor profile", er)
 
