@@ -19,6 +19,10 @@
   </div>
 </template>
 
+<template name="contactMsg">
+  {{#if location.name}}I live near {{location.name}} & {{/if}}I'd like to learn {{tutor.subject}}. Please let me know if you're available.
+</template>
+
 <template name="registerToContact">
   <form action="">
     <div class="form-group">

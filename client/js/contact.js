@@ -27,7 +27,11 @@ Template.contact.events({
   'click #tutor-contact':function (evt) {
     evt.preventDefault()
     var tutor = Tutors.findByPuid(Session.get("tutor-puid"))
-    Meteor.call('contact', tutor.userId, 'Please can has?')
+      , msg = Template.contactMsg({location: App.location, tutor: tutor})
+    Conversations.sendMessage(tutor.userId, msg, function (er) {
+      if (er) return console.error(er)
+      console.log("Message sent")
+    })
     $(this).addClass('disabled')
   }
 })

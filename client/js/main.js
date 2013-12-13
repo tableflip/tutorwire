@@ -5,6 +5,9 @@ Meteor.startup(function () {
   L.Icon.Default.prototype._getIconUrl = function (name) {
     return name == "icon" ? "/images/marker-icon.svg" : getIconUrl.call(this, name)
   }
+
+  Meteor.subscribe("userData")
+  Meteor.subscribe("conversations")
 })
 
 Router.configure({layoutTemplate: 'layout'})
@@ -15,5 +18,3 @@ Router.map(function () {
   this.route("tutor", {path: "/tutor/:puid", controller: TutorController})
   this.route("contact", {path: "/tutor/:puid/contact", controller: ContactController})
 })
-
-Meteor.subscribe("userData");

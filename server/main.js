@@ -37,28 +37,67 @@ Tutors.allow({
 })
 
 Conversations.allow({
-  insert: function (userId, doc) {
+  insert: function (userId, conv) {
     if (!userId) return false
 
-    doc.owner = userId
-    doc.users = doc.users || []
-    doc.messages = doc.messages || []
+    // TODO: Ensure conversation between userId and conv.users doesn't already exist
+
+    conv.owner = userId
+    conv.users = conv.users || []
+    conv.messages = conv.messages || []
 
     // Fill in the user details the client is allowed to see
-    doc.users.forEach(function (u) {
+    conv.users.forEach(function (u) {
       var user = Meteor.users.findOne(u.userId)
       if (!user) return console.warn("Cannot converse with", u.userId, "is not exists!")
-      u.name = user.name
-      u.avatar = user.avatar
+      u.name = user.profile.name
+      u.photo = user.profile.photo
     })
 
-    doc.updated = Date.now()
+    conv.updated = Date.now()
+
+    // Shallow clone a conversation giving it a new owner Id
+    function cloneConversation (conv, ownerId) {
+      return {
+        owner: ownerId,
+        users: conv.users,
+        messages: conv.messages,
+        updated: conv.updated
+      }
+    }
+
+    // Create reverse conversations
+    conv.users.filter(function (u) {
+      return u.userId != userId
+    }).forEach(function (u) {
+      Conversations.insert(cloneConversation(conv, u.userId))
+    })
+
     return true
   },
-  update: function (userId, doc) {
+  update: function (userId, conv, fieldNames, modifier) {
     // Only update your own conversations
-    if (!Conversations.findOne({_id: doc._id, owner: userId})) return false
-    doc.updated = Date.now()
+    if (!Conversations.findOne({_id: conv._id, owner: userId})) return false
+    // Only update messages
+    if (fieldNames.length > 1 || fieldNames[0] != "messages") return false
+
+    var now = Date.now()
+
+    // New messages must be syndicated to other conversations
+    if (modifier.$push && modifier.$push.messages) {
+      conv.users.filter(function (u) {
+        return u.userId != userId
+      }).forEach(function (u) {
+        var conv = Conversations.findOne({owner: u.userId, users: {$elemMatch: {userId: userId}}})
+        if (!conv) return console.error("Reverse conversation not found", u.userId, userId)
+        Conversations.update(conv._id, {$push: modifier.$push, $set: {updated: now}})
+      })
+    }
+
+    conv.updated = now
+    return true
+  },
+  remove: function () {
     return true
   }
 })
