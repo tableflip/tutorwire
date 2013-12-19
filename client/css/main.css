@@ -129,9 +129,7 @@ label{
 }
 .photoFrame img {
 	width:100%;
-}
-.leaflet-popup-content .photoFrame{
-	height: auto;
+	min-height: 100%;
 }
 .strapline{
 	display: none;
