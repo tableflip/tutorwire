@@ -136,7 +136,7 @@ label{
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
-.overlay h1, .overlay p {
+.overlay h1, .overlay p, .overlay a, .overlay .btn-link:hover, .overlay .btn-link:focus {
 	color: #fff;
 }
 .photo-icon{

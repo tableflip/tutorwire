@@ -48,6 +48,11 @@ Template.registerToContact.events({
 //    "click #register": function (evt) {
 //
 //    }
+    "click #login": function (e) {
+        e.preventDefault()
+        // WTF? Doesn't get triggered unless in next tick
+        setTimeout(function () { $("#account .dropdown-toggle").trigger("click") }, 0)
+    }
 })
 
 Template.registerToContact.rendered = function () {
@@ -70,7 +75,6 @@ Template.registerToContact.rendered = function () {
             Accounts.createUser(opts, function (er) {
                 if (er) return console.log(er)
             })
-
         }
     })
 }
