@@ -11,3 +11,10 @@ Template.conversations.otherUser = function (users) {
 
   return others[0] // TODO: First user that is not me... will have to pick the last message and find the user for that for multi chat.
 }
+
+Template.conversations.events = {
+  'click a': function (evt) {
+    // this is the conversation object
+    console.error('TODO: Go to conversation ' + this._id);
+  }
+}
