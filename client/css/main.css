@@ -236,6 +236,7 @@ label{
 }
 .new-conversations li {
 	list-style-type:none;
+	cursor:pointer;
 }
 
 .new-conversations .photo-icon {

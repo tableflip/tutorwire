@@ -14,7 +14,7 @@ Template.conversations.otherUser = function (users) {
 
 Template.conversations.events = {
   'click a': function (evt) {
-    // this is the conversation object
-    console.error('TODO: Go to conversation ' + this._id);
+    // `this` is the conversation object
+    Router.go('conversation', {puid: this.puid})
   }
 }
