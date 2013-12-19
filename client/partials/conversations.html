@@ -1,0 +1,18 @@
+<template name="conversations">
+  <div class="new-conversations">
+    <header>
+      <span class="glyphicon glyphicon-envelope"></span>
+    </header>
+    <ul>
+      {{#each new}}
+      <li>
+        <a>
+        {{#with otherUser users}}
+            <img class="photo-icon" title="Message from {{name}}" alt="{{name}}" src="{{#if photo}}{{photo.url}}{{else}}http://www.gravatar.com/avatar/?d=mm{{/if}}"/>
+        {{/with}}
+        </a>
+      </li>
+      {{/each}}
+    </ul>
+  </div>
+</template>

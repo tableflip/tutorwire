@@ -9,13 +9,13 @@ html, body, #map{
 a, a:hover {
 	color: white;
 }
-header{
+.brand{
 	padding:8px 10px;
 	position: absolute;
 	top:0;
 }
-header h1,
-header h2{
+.brand h1,
+.brand h2{
 	font-weight: 300;
 	font-size: 2.1em;
 	line-height: 1em;
@@ -23,7 +23,7 @@ header h2{
 	padding:0;
 	color:#fff;
 }
-header h1 a {
+.brand h1 a {
 	display: block;
 	width: 200px;
 	height: 51px;
@@ -32,12 +32,12 @@ header h1 a {
 	text-indent: -999em;
 	color: #fff;
 }
-header h1 a:hover, header h1 a:focus {
+.brand h1 a:hover, .brand h1 a:focus {
 	text-decoration: none;
 	color: #fff;
 	text-shadow: 0 0 3px #fff;
 }
-header h2{
+.brand h2{
 	font-weight: 400;
 	font-size: 1.1em;
 	letter-spacing: 1.5px;
@@ -217,6 +217,30 @@ label{
 }
 .tutor .overlay h1 span {
 	font-weight: normal;
+}
+
+.new-conversations {
+	position: absolute;
+	right:0;
+	top:50px;
+	background: rgba(0, 0, 0, 0.5);
+	padding:4px 12px 2px;
+}
+.new-conversations header{
+	text-align:center;
+	font-size:2em;
+	color: orange;
+}
+.new-conversations ul {
+	padding:0;
+}
+.new-conversations li {
+	list-style-type:none;
+}
+
+.new-conversations .photo-icon {
+	width:50px;
+	height:50px;
 }
 
 /** Bootstrap tweaks **/
