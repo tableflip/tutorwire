@@ -17,4 +17,5 @@ Router.map(function () {
   this.route("join", {path: "/join", controller: JoinController})
   this.route("tutor", {path: "/tutor/:puid", controller: TutorController})
   this.route("contact", {path: "/tutor/:puid/contact", controller: ContactController})
+  this.route("conversation", {path: "/conversation/:puid", controller: ConversationController})
 })
