@@ -5,3 +5,10 @@ ConversationController = RouteController.extend({
       return {bodyClass: "conevrsation"}
   }
 })
+
+Template.conversation.events = {
+  'click button': function (evt, tpl) {
+    var text = tpl.find('input').value
+    console.log('Send: ', text, this)
+  }
+}
