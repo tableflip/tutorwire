@@ -244,6 +244,58 @@ label{
 	height:50px;
 }
 
+.conversation #messages {
+	padding: 0;
+	list-style-type: none;
+}
+.conversation #messages li {
+	margin: 10px 0;
+	padding: 0 0 20px;
+	position: relative;
+}
+.conversation #messages li:first-child {
+	margin-top: 0;
+}
+.conversation #messages img {
+	position: absolute;
+	bottom: 0;
+}
+.conversation #messages li:nth-child(odd) img {
+	left: 0;
+}
+.conversation #messages li:nth-child(even) img {
+	right: 0;
+}
+.conversation #messages .text {
+	background: #fff;
+	padding: 10px;
+	border-radius: 5px;
+}
+.conversation #messages li:nth-child(odd) .text {
+	border-bottom-left-radius: 0;
+	margin-left: 70px;
+}
+.conversation #messages li:nth-child(even) .text {
+	border-bottom-right-radius: 0;
+	margin-right: 70px;
+}
+.conversation #messages time {
+	font-size: 11px;
+	color: #fff;
+	color: rgba(255, 255, 255, 0.2);
+	position: absolute;
+	bottom: 0;
+}
+.conversation #messages li:hover time {
+	color: #fff;
+}
+.conversation #messages li:nth-child(odd) time {
+	right: 0;
+}
+.conversation #messages li:nth-child(even) time {
+	left: 0;
+}
+
 /** Bootstrap tweaks **/
 
 .btn-primary {
