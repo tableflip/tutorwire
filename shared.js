@@ -27,7 +27,7 @@ Conversations.sendMessage = function (recipientId, text, cb) {
 
   var message = {
     text: text.trim(),
-    by: this.userId,
+    by: userId,
     created: Date.now()
   }
 
