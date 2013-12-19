@@ -43,6 +43,7 @@ Conversations.allow({
     // TODO: Ensure conversation between userId and conv.users doesn't already exist
 
     conv.owner = userId
+    conv.puid = shortid.generate()
     conv.users = conv.users || []
     conv.messages = conv.messages || []
 
@@ -60,6 +61,7 @@ Conversations.allow({
     function cloneConversation (conv, ownerId) {
       return {
         owner: ownerId,
+        puid: shortid.generate(),
         users: conv.users,
         messages: conv.messages,
         updated: conv.updated
@@ -95,9 +97,6 @@ Conversations.allow({
     }
 
     conv.updated = now
-    return true
-  },
-  remove: function () {
     return true
   }
 })
