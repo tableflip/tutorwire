@@ -1,9 +1,11 @@
 <template name="conversation">
   {{> header }}
   <div class="overlay">
-    <ul id="messages">
-      {{> conversationMsgs }}
-    </ul>
+    <div id="messages-container">
+        <ul id="messages">
+            {{> conversationMsgs }}
+         </ul>
+    </div>
     {{#constant}}
     <form>
         <div class="input-group">

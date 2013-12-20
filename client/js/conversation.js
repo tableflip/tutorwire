@@ -26,34 +26,34 @@ ConversationController = RouteController.extend({
   }
 })
 
-function resizeMessagesWindow () {
+function resizeMessagesCt () {
     var winHeight = $(window).height()
-    $("#messages").height(winHeight - 180)
+    $("#messages-container").height(winHeight - 180)
 }
 
-function scrollBottomMessagesWindow () {
+function scrollBottomMessages () {
     var msgs = $("#messages")
     msgs.animate({scrollTop: msgs.height()}, 500)
 }
 
 Template.conversation.rendered = function () {
-    resizeMessagesWindow()
-    scrollBottomMessagesWindow()
+    resizeMessagesCt()
+    scrollBottomMessages()
 }
 
-Template.conversation.isMe = function (userId) {
+Template.conversationMsgs.isMe = function (userId) {
   return userId == Meteor.userId()
 }
 
-Template.conversation.username = function (userId, users) {
+Template.conversationMsgs.username = function (userId, users) {
   return users[userId].name
 }
 
-Template.conversation.photo = function (userId, users) {
+Template.conversationMsgs.photo = function (userId, users) {
   return (users[userId].photo && users[userId].photo.url) || 'http://www.gravatar.com/avatar/?d=mm'
 }
 
-Template.conversation.other = function () {
+Template.conversationMsgs.other = function () {
   return this.conversation.users.filter(function(u){
     return u.userId != Meteor.userId()
   })[0]
