@@ -4,18 +4,20 @@ ConversationController = RouteController.extend({
   data: function () {
     var conversation = Conversations.findOne({puid: this.params.puid})
 
-    if (conversation.unread) {
-        Conversations.update(conversation._id, {$set: {unread: 0}})
-    }
-
     var users
-    if (conversation && conversation.users){
+    if (conversation && conversation.users) {
+      if (conversation.unread) {
+        Conversations.update(conversation._id, {$set: {unread: 0}})
+      }
+
       users = conversation.users.reduce(function (idMap, user) {
         idMap[user.userId] = user
         return idMap
       }, {})
+
       console.log(users)
     }
+
     return {
       bodyClass: "conversation",
       conversation: conversation,
