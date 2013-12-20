@@ -19,3 +19,11 @@ Router.map(function () {
   this.route("contact", {path: "/tutor/:puid/contact", controller: ContactController})
   this.route("conversation", {path: "/conversation/:puid", controller: ConversationController})
 })
+
+Handlebars.registerHelper('isoTime', function (timestamp) {
+  return moment(timestamp).toISOString()
+})
+
+Handlebars.registerHelper('fromNow', function (timestamp) {
+  return moment(timestamp).fromNow()
+})

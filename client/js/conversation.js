@@ -37,11 +37,10 @@ Template.conversation.rendered = function () {
 Template.conversation.username = function (userId, users) {
   return users[userId].name
 }
+
 Template.conversation.photo = function (userId, users) {
   return (users[userId].photo && users[userId].photo.url) || 'http://www.gravatar.com/avatar/?d=mm'
 }
-Template.conversation.utcTime = function () { return '123' }
-Template.conversation.fromNow = function () { return 'SOON'}
 
 Template.conversation.events = {
   'click button': function (evt, tpl) {

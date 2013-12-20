@@ -5,10 +5,10 @@
       {{#each conversation.messages}}
         <li>
             <a href="#" title="{{username by ../users}}">
-              <img src="{{photo by ../users}}" alt="Avatar for {{username by ../users}}" width="60" height="60">
+              <img class="photo-icon" src="{{photo by ../users}}" alt="Avatar for {{username by ../users}}">
             </a>
             <div class="text">{{text}}</div>
-            <time datetime="{{utcTime created}}" title="{{utcTime created}}">{{fromNow created}}</time>
+            <time datetime="{{isoTime created}}" title="{{isoTime created}}">{{fromNow created}}</time>
         </li>
       {{/each}}
     </ul>
