@@ -53,8 +53,15 @@ Template.conversation.photo = function (userId, users) {
   return (users[userId].photo && users[userId].photo.url) || 'http://www.gravatar.com/avatar/?d=mm'
 }
 
+Template.conversation.other = function () {
+  return this.conversation.users.filter(function(u){
+    return u.userId != Meteor.userId()
+  })[0]
+}
+
 Template.conversation.events = {
-  'click button': function (evt, tpl) {
+  'click button, submit': function (evt, tpl) {
+    evt.preventDefault()
     var text = tpl.find('input').value
     var fromId = Meteor.userId()
 
