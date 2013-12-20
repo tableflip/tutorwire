@@ -34,6 +34,10 @@ Template.conversation.rendered = function () {
     scrollBottomMessagesWindow()
 }
 
+Template.conversation.isMe = function (userId) {
+  return userId == Meteor.userId()
+}
+
 Template.conversation.username = function (userId, users) {
   return users[userId].name
 }

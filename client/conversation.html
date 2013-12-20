@@ -3,7 +3,7 @@
   <div class="overlay">
     <ul id="messages">
       {{#each conversation.messages}}
-        <li>
+        <li class="{{#if isMe by}}me{{else}}them{{/if}}">
             <a href="#" title="{{username by ../users}}">
               <img class="photo-icon" src="{{photo by ../users}}" alt="Avatar for {{username by ../users}}">
             </a>
