@@ -22,11 +22,13 @@
 <template name="conversationMsgs">
   {{#each conversation.messages}}
     <li class="{{#if isMe by}}me{{else}}them{{/if}}">
-        <a href="#" title="{{username by ../users}}">
-          <img class="photo-icon" src="{{photo by ../users}}" alt="Avatar for {{username by ../users}}">
+        <a href="#">
+          <img class="photo-icon" src="{{photo by ../users}}" title="{{username by ../users}}" alt="Avatar for {{username by ../users}}">
         </a>
-        <div class="text">{{text}}</div>
-        <time datetime="{{isoTime created}}" title="{{isoTime created}}">{{fromNow created}}</time>
+        <div class="msg">
+          <div class="text">{{text}}</div>
+          <time datetime="{{isoTime created}}" title="{{isoTime created}}">{{fromNow created}}</time>
+        </div>
     </li>
   {{/each}}
 </template>

@@ -292,10 +292,14 @@ label{
 .conversation #messages li.me img {
 	right: 0;
 }
+.conversation #messages li.me .msg {
+	text-align: right;
+}
 .conversation #messages .text {
 	background: #fff;
 	padding: 10px;
 	border-radius: 5px;
+	display: inline-block;
 }
 .conversation #messages li.them .text {
 	border-bottom-left-radius: 0;
@@ -316,10 +320,10 @@ label{
 	color: #fff;
 }
 .conversation #messages li.them time {
-	right: 0;
+	left: 70px;
 }
 .conversation #messages li.me time {
-	left: 0;
+	right: 70px;
 }
 
 /** Bootstrap tweaks **/
