@@ -26,34 +26,33 @@ ConversationController = RouteController.extend({
   }
 })
 
-function resizeMessagesWindow () {
+function resizeMessagesCt () {
     var winHeight = $(window).height()
-    $("#messages").height(winHeight - 180)
+    $("#messages-container").height(winHeight - 180)
 }
 
-function scrollBottomMessagesWindow () {
-    var msgs = $("#messages")
-    msgs.animate({scrollTop: msgs.height()}, 500)
+function scrollBottomMessages () {
+    $("#messages-container").prop("scrollTop", $("#messages").height())
 }
 
 Template.conversation.rendered = function () {
-    resizeMessagesWindow()
-    scrollBottomMessagesWindow()
+    resizeMessagesCt()
+    scrollBottomMessages()
 }
 
-Template.conversation.isMe = function (userId) {
+Template.conversationMsgs.isMe = function (userId) {
   return userId == Meteor.userId()
 }
 
-Template.conversation.username = function (userId, users) {
+Template.conversationMsgs.username = function (userId, users) {
   return users[userId].name
 }
 
-Template.conversation.photo = function (userId, users) {
+Template.conversationMsgs.photo = function (userId, users) {
   return (users[userId].photo && users[userId].photo.url) || 'http://www.gravatar.com/avatar/?d=mm'
 }
 
-Template.conversation.other = function () {
+Template.conversationMsgs.other = function () {
   return this.conversation.users.filter(function(u){
     return u.userId != Meteor.userId()
   })[0]
@@ -62,16 +61,22 @@ Template.conversation.other = function () {
 Template.conversation.events = {
   'click button, submit': function (evt, tpl) {
     evt.preventDefault()
-    var text = tpl.find('input').value
+
+    var input = tpl.find('input')
+    var text = input.value
     var fromId = Meteor.userId()
 
     // TODO: push this into sendMessage, we shouldn't have to unpick the other recipients each time.
     var users = this.conversation.users.filter(function(u){ return u.userId != fromId})
     var toId = users && users[0] && users[0].userId // Erk, make nice.
+
     console.log('sending', text, toId, this)
-    Conversations.sendMessage(toId, text, function(er){
-      if (er) return console.error('Failed to send', er);
+
+    Conversations.sendMessage(toId, text, function (er) {
+      if (er) return console.error('Failed to send', er)
       console.log('sent message')
     })
+
+    input.value = ""
   }
 }
