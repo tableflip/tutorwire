@@ -64,6 +64,7 @@ Conversations.allow({
         puid: shortid.generate(),
         users: conv.users,
         messages: conv.messages,
+        unread: 1,
         updated: conv.updated
       }
     }
