@@ -64,6 +64,9 @@ Template.conversation.events = {
 
     var input = tpl.find('input')
     var text = input.value
+
+    if (!text) return;
+
     var fromId = Meteor.userId()
 
     // TODO: push this into sendMessage, we shouldn't have to unpick the other recipients each time.
