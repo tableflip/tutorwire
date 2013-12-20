@@ -283,10 +283,10 @@ label{
 	position: absolute;
 	bottom: 0;
 }
-.conversation #messages li:nth-child(odd) img {
+.conversation #messages li.them img {
 	left: 0;
 }
-.conversation #messages li:nth-child(even) img {
+.conversation #messages li.me img {
 	right: 0;
 }
 .conversation #messages .text {
@@ -294,11 +294,11 @@ label{
 	padding: 10px;
 	border-radius: 5px;
 }
-.conversation #messages li:nth-child(odd) .text {
+.conversation #messages li.them .text {
 	border-bottom-left-radius: 0;
 	margin-left: 70px;
 }
-.conversation #messages li:nth-child(even) .text {
+.conversation #messages li.me .text {
 	border-bottom-right-radius: 0;
 	margin-right: 70px;
 }
@@ -312,10 +312,10 @@ label{
 .conversation #messages li:hover time {
 	color: #fff;
 }
-.conversation #messages li:nth-child(odd) time {
+.conversation #messages li.them time {
 	right: 0;
 }
-.conversation #messages li:nth-child(even) time {
+.conversation #messages li.me time {
 	left: 0;
 }
 
