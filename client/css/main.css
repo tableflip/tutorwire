@@ -245,8 +245,19 @@ label{
 }
 
 .conversation #messages {
-	padding: 0;
+	margin-right: -20px;
+	padding: 0 10px 0 0;
 	list-style-type: none;
+	overflow-y: scroll;
+}
+.conversation #messages::-webkit-scrollbar {
+  width: 12px;
+}
+.conversation #messages::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+.conversation #messages::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.5);
 }
 .conversation #messages li {
 	margin: 10px 0;
