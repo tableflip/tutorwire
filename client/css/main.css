@@ -228,7 +228,7 @@ label{
 	background: rgba(0, 0, 0, 0.5);
 	padding:4px 12px 2px;
 }
-.new-messages header{
+.new-messages header {
 	text-align:center;
 	font-size:2em;
 	color: orange;
@@ -239,6 +239,17 @@ label{
 .new-messages li {
 	list-style-type:none;
 	cursor:pointer;
+}
+.new-messages a {
+	position: relative;
+	display: inline-block;
+}
+.new-messages a .badge {
+	position: absolute;
+	top: -5px;
+	right: -5px;
+	background-color: #c5251c;
+	box-shadow: 0 0 2px #000;
 }
 .new-messages .photo-icon{
 	margin-bottom: 5px;
