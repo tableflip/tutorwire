@@ -221,11 +221,13 @@ label{
 	font-weight: normal;
 }
 
-.new-messages {
+.new-messages > div{
 	position: absolute;
-	right:0;
+	right:10px;
 	top:50px;
 	background: rgba(0, 0, 0, 0.5);
+	box-shadow: 0 0 0.25em #000;
+	border-right: 1px solid #000;
 	padding:4px 12px 2px;
 }
 .new-messages header {

@@ -1,4 +1,6 @@
 <template name="newMessages">
+  {{#if conversations.count}}
+  <div>
     <header>
       <span class="glyphicon glyphicon-envelope"></span>
     </header>
@@ -16,4 +18,6 @@
       </li>
       {{/each}}
     </ul>
+  </div>
+  {{/if}}
 </template>

@@ -66,8 +66,11 @@ Template.registerToContact.rendered = function () {
                 email: $('#email').val(),
                 password: $('#password').val(),
                 profile:{
-                    name: $('#name').val()
+                    name: $('#name').val(),
                     // TODO: grab location if we have it
+                    photo:{
+                      url: 'http://www.gravatar.com/avatar/' + $.md5($('#email').val()) + '?d=mm'
+                    }
                 }
             }
 
