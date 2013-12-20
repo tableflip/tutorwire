@@ -80,8 +80,6 @@ Conversations.allow({
   update: function (userId, conv, fieldNames, modifier) {
     // Only update your own conversations
     if (!Conversations.findOne({_id: conv._id, owner: userId})) return false
-    // Only update messages
-    if (fieldNames.length > 1 || fieldNames[0] != "messages") return false
 
     var now = Date.now()
 
@@ -92,7 +90,7 @@ Conversations.allow({
       }).forEach(function (u) {
         var conv = Conversations.findOne({owner: u.userId, users: {$elemMatch: {userId: userId}}})
         if (!conv) return console.error("Reverse conversation not found", u.userId, userId)
-        Conversations.update(conv._id, {$push: modifier.$push, $set: {updated: now}})
+        Conversations.update(conv._id, {$push: modifier.$push, $inc: {unread: 1}, $set: {updated: now}})
       })
     }
 
