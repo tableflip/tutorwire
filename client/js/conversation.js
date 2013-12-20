@@ -32,8 +32,7 @@ function resizeMessagesCt () {
 }
 
 function scrollBottomMessages () {
-    var msgs = $("#messages")
-    msgs.animate({scrollTop: msgs.height()}, 500)
+    $("#messages-container").prop("scrollTop", $("#messages").height())
 }
 
 Template.conversation.rendered = function () {
@@ -62,16 +61,22 @@ Template.conversationMsgs.other = function () {
 Template.conversation.events = {
   'click button, submit': function (evt, tpl) {
     evt.preventDefault()
-    var text = tpl.find('input').value
+
+    var input = tpl.find('input')
+    var text = input.value
     var fromId = Meteor.userId()
 
     // TODO: push this into sendMessage, we shouldn't have to unpick the other recipients each time.
     var users = this.conversation.users.filter(function(u){ return u._id != fromId})
     var toId = users && users[0] && users[0].userId // Erk, make nice.
+
     console.log('sending', text, toId, this)
-    Conversations.sendMessage(toId, text, function(er){
-      if (er) return console.error('Failed to send', er);
+
+    Conversations.sendMessage(toId, text, function (er) {
+      if (er) return console.error('Failed to send', er)
       console.log('sent message')
     })
+
+    input.value = ""
   }
 }
