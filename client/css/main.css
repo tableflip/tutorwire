@@ -259,6 +259,7 @@ label{
 .conversation #messages-container {
 	margin: 0 -20px 10px 0;
 	padding: 0 10px 0 0;
+	overflow-x: hidden;
 	overflow-y: scroll;
 }
 .conversation #messages-container::-webkit-scrollbar {
