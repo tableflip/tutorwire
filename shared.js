@@ -52,10 +52,16 @@ Conversations.sendMessage = function (recipientId, text, cb) {
       }],
       messages: [message],
       updated: Date.now()
-    }, cb)
+    }, function (er, id) {
+        if (er) return cb(er)
+        cb(null, Conversations.findOne(id))
+    })
 
   } else {
     console.log("Updating conversation between", userId, "and", recipientId)
-    Conversations.update(conv._id, {$push: {messages: message}}, cb)
+    Conversations.update(conv._id, {$push: {messages: message}}, function (er) {
+        if (er) return cb(er)
+        cb(null, Conversations.findOne(conv._id))
+    })
   }
 }

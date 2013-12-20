@@ -28,9 +28,10 @@ Template.contact.events({
     evt.preventDefault()
     var tutor = Tutors.findByPuid(Session.get("tutor-puid"))
       , msg = Template.contactMsg({location: App.location, tutor: tutor})
-    Conversations.sendMessage(tutor.userId, msg, function (er) {
+    Conversations.sendMessage(tutor.userId, msg, function (er, conversation) {
       if (er) return console.error(er)
       console.log("Message sent")
+      Router.go("/conversation/" + conversation.puid)
     })
     $(this).addClass('disabled')
   }
