@@ -3,7 +3,9 @@
 <div class="overlay">
   <form class="" action="" method="post">
     <p>Start creating your tutoring profile</p>
-    <div id="photoDropTarget" class="photoFrame form-group">Drop photo here</div>
+    <div class="photoFrame form-group">
+      {{> photoUpload}}
+    </div>
     <div class="form-group">
       <input type="text" placeholder="Name" name="name" id="name" class="form-control validate[required]">
     </div>
@@ -16,10 +18,22 @@
     <div class="form-group">
       <input type="email" placeholder="your@email.address" name="email" id="email" class="form-control validate[required,custom[email]]">
     </div>
+    {{#unless currentUser}}
     <div class="form-group">
       <input type="password" placeholder="Password" name="password" id="password" class="form-control validate[required]">
     </div>
+    {{/unless}}
     <input type="submit" class="btn btn-default" id="addTutor" value="Create Profile"/>
   </form>
 </div>
+</template>
+
+<template name="photoUpload">
+{{#if photo}}
+  <img src="{{photo.url}}"/>
+{{else}}
+  <div id="photoDropTarget">
+    Drop photo here
+  </div>
+{{/if}}
 </template>

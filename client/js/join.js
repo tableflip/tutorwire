@@ -6,14 +6,16 @@ JoinController = RouteController.extend({
     return [Meteor.subscribe("subjects"), Meteor.subscribe("city-locations", Session.get("country"))]
   },
 
+  // Runs before the action, every time the data changes.
   before: function () {
 
   },
-
+  // provide data to the template
   data: function () {
     return {bodyClass: "join"}
   },
 
+  // Runs after the action, every time the data changes.
   after: function () {
     var subjects = Subjects.find()
 
@@ -54,6 +56,14 @@ JoinController = RouteController.extend({
     $(".tt-hint").addClass("form-control")
   },
 
+  // Run once when route is matched. Is *NOT* re-run on hot code re-load
+  load: function () {
+    if (Meteor.user()){
+      Session.set('photo', Meteor.user().profile.photo)
+    }
+  },
+
+  // Run once when loading a new route
   unload: function () {
     App.clearMarkers()
   }
@@ -121,7 +131,7 @@ Template.join.rendered = function () {
       if (!valid) return console.warn("Registration form invalid")
 
       var tutor = {
-          photo: App.photo
+          photo: Session.get('photo')
         , name: $('#name').val()
         , email: $('#email').val()
         , subject: $('#subject').val()
@@ -130,7 +140,11 @@ Template.join.rendered = function () {
 
       tutor.location.properties.name = App.location.name
 
-      if (!isRegistered(tutor.email)){ // create a user then create a tutor
+      if (Meteor.user()){
+
+        createTutorAndView(tutor)
+
+      } else if (!isRegistered(tutor.email)){ // create a user then create a tutor
 
         Accounts.createUser({
           email: tutor.email,
@@ -138,7 +152,7 @@ Template.join.rendered = function () {
           profile:{
             name: tutor.name,
             location: tutor.location,
-            photo: App.photo
+            photo: Session.get('photo')
           }
         }, function (er) {
           if (er) return console.log(er)
@@ -159,7 +173,12 @@ Template.join.rendered = function () {
     }
   })
 
-  addPhotoDropTarget()
+  // if the user is logged in, pre-fill the data
+  var u = Meteor.user()
+  if(u){
+    $('#name').val(u.profile.name)
+    $('#email').val(u.emails[0].address)
+  }
 }
 
 function createTutorAndView (tutor) {
@@ -175,8 +194,8 @@ function createTutorAndView (tutor) {
   })
 }
 
-function addPhotoDropTarget () {
-  var target = $("#photoDropTarget")
+function addPhotoDropTarget (target) {
+  if (!target) return console.log('no target')
 
   filepicker.setKey('AeYGxADbBSoe2uvUCJHBWz')
   filepicker.makeDropPane(target[0], {
@@ -188,10 +207,8 @@ function addPhotoDropTarget () {
       target.html("Drop files here")
     },
     onSuccess: function (fpfiles) {
-      target.empty()
       console.log(fpfiles)
-      App.photo = fpfiles[0]
-      $("<img>").attr("src", App.photo.url).appendTo(target)
+      Session.set('photo', fpfiles[0])
     },
     onError: function (type, message) {
       $("#localDropResult").text("(" + type + ") " + message)
@@ -204,4 +221,12 @@ function addPhotoDropTarget () {
 
 function isRegistered (email) {
   return Meteor.users.find({ emails: email }).count() > 0
+}
+
+Template.photoUpload.rendered = function () {
+  addPhotoDropTarget(this.find('#photoDropTarget'))
+}
+
+Template.photoUpload.photo = function () {
+  return Session.get('photo')
 }
