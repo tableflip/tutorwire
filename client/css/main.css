@@ -89,6 +89,7 @@ a, a:hover {
 #map{
 	position: absolute;
 	top:0;
+	background-color: #78A2CA;
 }
 #map:after {
 	content: " ";
@@ -109,6 +110,13 @@ a, a:hover {
 }
 #map .leaflet-popup a.leaflet-popup-close-button:hover {
   color: #999;
+}
+#map .leaflet-popup-content-wrapper,
+#map .leaflet-popup-tip{
+	background-color: #eee;
+}
+#map .leaflet-popup-content{
+	margin: 20px 16px 14px;
 }
 
 body{

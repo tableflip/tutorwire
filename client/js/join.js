@@ -126,7 +126,8 @@ Template.join.rendered = function () {
 
   map.locate()
 
-  $("form").validationEngine("attach", {
+  $("form.tutor-profile").validationEngine("attach", {
+
     onValidationComplete: function (form, valid) {
       if (!valid) return console.warn("Registration form invalid")
 
@@ -135,50 +136,18 @@ Template.join.rendered = function () {
         , name: $('#name').val()
         , email: $('#email').val()
         , subject: $('#subject').val()
+        , desc: $('#desc').val()
         , location: L.marker([App.location.coords.lat, App.location.coords.lng]).toGeoJSON()
       }
 
       tutor.location.properties.name = App.location.name
 
-      if (Meteor.user()){
-
-        createTutorAndView(tutor)
-
-      } else if (!isRegistered(tutor.email)){ // create a user then create a tutor
-
-        Accounts.createUser({
-          email: tutor.email,
-          password: $('#password').val(),
-          profile:{
-            name: tutor.name,
-            location: tutor.location,
-            photo: Session.get('photo')
-          }
-        }, function (er) {
-          if (er) return console.log(er)
-          createTutorAndView(tutor)
-        })
-
-      } else { // try and log in with the credentials, then create the tutor
-
-        Meteor.loginWithPassword(tutor.email, $('#password'.val()), function(er){
-
-          if (er) return console.log(er)
-
-          createTutorAndView(tutor)
-        })
-      }
+      createTutorAndView(tutor)
 
       return false
     }
   })
 
-  // if the user is logged in, pre-fill the data
-  var u = Meteor.user()
-  if(u){
-    $('#name').val(u.profile.name)
-    $('#email').val(u.emails[0].address)
-  }
 }
 
 function createTutorAndView (tutor) {
@@ -217,10 +186,6 @@ function addPhotoDropTarget (target) {
       target.text("Uploading (" + percentage + "%)")
     }
   })
-}
-
-function isRegistered (email) {
-  return Meteor.users.find({ emails: email }).count() > 0
 }
 
 Template.photoUpload.rendered = function () {

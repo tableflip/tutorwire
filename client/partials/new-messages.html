@@ -9,7 +9,10 @@
       <li>
         <a>
         {{#with otherUser users}}
-            <img class="photo-icon" title="Message from {{name}}" alt="{{name}}" src="{{#if photo}}{{photo.url}}{{else}}http://www.gravatar.com/avatar/?d=mm{{/if}}"/>
+            <img class="photo-icon"
+                 title="{{name}}"
+                 alt="{{name}}"
+                 src="{{#if photo}}{{photo.url}}{{else}}http://www.gravatar.com/avatar/?d=mm{{/if}}"/>
         {{/with}}
         {{#if unread}}
             <span class="badge">{{unread}}</span>
