@@ -20,6 +20,15 @@
     <div class="form-group">
       <textarea name="desc" id="desc" class="form-control" placeholder="Bio"></textarea>
     </div>
+    <div id="qualification-tags-input" class="form-group" data-output="#qualification-tags-output">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Qualifications">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-plus"></span></button>
+        </span>
+      </div>
+    </div>
+    <div id="qualification-tags-output" class="form-group"></div>
     <input type="submit" class="btn btn-default" id="addTutor" value="Create Profile"/>
   </form>
   {{else}}

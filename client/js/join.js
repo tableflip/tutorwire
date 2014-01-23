@@ -66,6 +66,7 @@ JoinController = RouteController.extend({
   // Run once when loading a new route
   unload: function () {
     App.clearMarkers()
+    $("#qualification-tags-input").tagInput("detach")
   }
 })
 
@@ -148,6 +149,7 @@ Template.join.rendered = function () {
     }
   })
 
+  $("#qualification-tags-input").tagInput()
 }
 
 function createTutorAndView (tutor) {
@@ -167,7 +169,7 @@ function addPhotoDropTarget (target) {
   if (!target) return console.log('no target')
 
   filepicker.setKey('AeYGxADbBSoe2uvUCJHBWz')
-  filepicker.makeDropPane(target[0], {
+  filepicker.makeDropPane(target, {
     multiple: true,
     dragEnter: function () {
       target.html("Drop to upload")

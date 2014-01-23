@@ -200,6 +200,15 @@ label {
   font-size: 1.7em;
 }
 
+/** Join page **/
+
+.join .tag {
+  margin-left: 0.5em;
+}
+.join .tag:first-child {
+  margin-left: 0;
+}
+
 /** Tutor page **/
 
 .tutor .overlay h1 {
@@ -259,7 +268,7 @@ label {
 .conversation #messages-container {
   margin: 0 -20px 10px 0;
   padding: 0 10px 0 0;
-  overflow-x: hidden;
+  overflow: visible;
   overflow-y: scroll;
 }
 .conversation #messages-container::-webkit-scrollbar {
