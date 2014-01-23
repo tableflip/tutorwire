@@ -65,7 +65,7 @@
       }
 
       // re-enable existing tags if possible (have class name "tag")
-      $("tag", outputCt).each(function () {
+      $(".tag", outputCt).each(function () {
         var tag = $(this)
         tag.click(function (e) {
           e.preventDefault()
