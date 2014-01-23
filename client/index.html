@@ -4,13 +4,16 @@
 
 <body>
   <div id="map"></div>
-  <div class="new-messages">
-    {{>newMessages}}
-  </div>
 </body>
 
 <template name="layout">
-  <div class="{{bodyClass}}">
+  <div id="main" class="{{bodyClass}}">
     {{yield}}
+  </div>
+  <ul id="account">
+    {{loginButtons align="right"}}
+  </ul>
+  <div class="new-messages">
+    {{>newMessages}}
   </div>
 </template>

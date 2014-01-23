@@ -27,17 +27,17 @@ ConversationController = RouteController.extend({
 })
 
 function resizeMessagesCt () {
-    var winHeight = $(window).height()
-    $("#messages-container").height(winHeight - 180)
+  var winHeight = $(window).height()
+  $("#messages-container").height(winHeight - 150)
 }
 
 function scrollBottomMessages () {
-    $("#messages-container").prop("scrollTop", $("#messages").height())
+  $("#messages-container").prop("scrollTop", $("#messages").height())
 }
 
 Template.conversation.rendered = function () {
-    resizeMessagesCt()
-    scrollBottomMessages()
+  resizeMessagesCt()
+  scrollBottomMessages()
 }
 
 Template.conversationMsgs.isMe = function (userId) {
