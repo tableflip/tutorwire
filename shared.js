@@ -65,3 +65,7 @@ Conversations.sendMessage = function (recipientId, text, cb) {
     })
   }
 }
+
+Qualifications = new Meteor.Collection("qualifications")
+
+Experience = new Meteor.Collection("experience")

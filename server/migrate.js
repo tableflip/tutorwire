@@ -14,4 +14,30 @@ Meteor.startup(function () {
       CityLocations.insert(c)
     })
   }
+
+  if (!Qualifications.find().count()) {
+    [{
+      name: "GCSE Level",
+      subject: "Maths"
+    }, {
+      name: "A-Level",
+      subject: "Maths"
+    }, {
+      name: "Degree Level",
+      subject: "Maths"
+    }].forEach(function (q) {
+      console.log("Inserting qualification", q.name, "for subject", q.subject)
+      Qualifications.insert(q)
+    })
+  }
+
+  if (!Experience.find().count()) {
+    [{
+      name: "5 Years",
+      subject: "Maths"
+    }].forEach(function (q) {
+      console.log("Inserting experience", q.name, "for subject", q.subject)
+      Experience.insert(q)
+    })
+  }
 })
