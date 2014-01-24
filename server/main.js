@@ -100,6 +100,14 @@ Conversations.allow({
   }
 })
 
+Meteor.publish("qualifications-by-subject", function (subject) {
+  return Qualifications.findBySubject(subject)
+})
+
+Meteor.publish("experiences-by-subject", function (subject) {
+  return Experiences.findBySubject(subject)
+})
+
 Meteor.methods({
   // TODO: Remove for productions!
   // Create a bunch of test tutors in the database

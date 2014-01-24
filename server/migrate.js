@@ -31,13 +31,13 @@ Meteor.startup(function () {
     })
   }
 
-  if (!Experience.find().count()) {
+  if (!Experiences.find().count()) {
     [{
       name: "5 Years",
       subject: "Maths"
     }].forEach(function (q) {
       console.log("Inserting experience", q.name, "for subject", q.subject)
-      Experience.insert(q)
+      Experiences.insert(q)
     })
   }
 })

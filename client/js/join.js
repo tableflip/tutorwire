@@ -40,7 +40,7 @@ JoinController = RouteController.extend({
       var placeInput = $("#place")
 
       if (placeInput.data("typeahead")) {
-        subjectInput.unbind("typeahead:selected").typeahead("destroy")
+        placeInput.unbind("typeahead:selected").typeahead("destroy")
       }
 
       placeInput
@@ -102,8 +102,45 @@ function onPlaceChange () {
   }
 }
 
+function onSubjectChange () {
+  var subject = $("#subject").val()
+
+  Meteor.subscribe("qualifications-by-subject", subject, function () {
+    console.log(Qualifications.findBySubject(subject).fetch().map(function (q) { return q.name }))
+    var qualInput = $("#qualification")
+
+    qualInput
+      .typeahead("destroy")
+      .typeahead({
+        name: "qualifications",
+        local: Qualifications.findBySubject(subject).fetch().map(function (q) { return q.name })
+      })
+      .data("typeahead", true)
+
+    // Style tt-hint like a form-control
+    $(".tt-hint").addClass("form-control")
+  })
+
+  Meteor.subscribe("experiences-by-subject", subject, function () {
+    console.log(Experiences.findBySubject(subject).fetch().map(function (q) { return q.name }))
+    var expInput = $("#experience")
+
+    expInput
+      .typeahead("destroy")
+      .typeahead({
+        name: "experiences",
+        local: Experiences.findBySubject(subject).fetch().map(function (q) { return q.name })
+      })
+      .data("typeahead", true)
+
+    // Style tt-hint like a form-control
+    $(".tt-hint").addClass("form-control")
+  })
+}
+
 Template.join.events({
-  "change #place": onPlaceChange
+  "change #place": onPlaceChange,
+  "change #subject": onSubjectChange
 })
 
 Template.join.rendered = function () {
