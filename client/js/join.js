@@ -107,25 +107,16 @@ Template.join.events({
 })
 
 Template.join.rendered = function () {
-  var map = App.map
 
-  map.on("locationfound", function (event) {
-    showPlace("Unknown", event.latlng)
+  App.locateUser(function (er, loc) {
+    if (er) return console.error(er)
 
-    map.setView(event.latlng, 8)
+    showPlace(loc.name, loc.coords)
 
-    App.geocoder().reverseQuery(event.latlng, function (er, response){
-      if (er) return console.error(er)
-
-      var city = response.results[0][0].name
-
-      $("#place").typeahead("setQuery", city)
-
-      App.location.name = city
-    })
+    if (loc.name != "Unknown") {
+      $("#place").typeahead("setQuery", loc.name)
+    }
   })
-
-  map.locate()
 
   $("form.tutor-profile").validationEngine("attach", {
 

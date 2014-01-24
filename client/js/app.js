@@ -42,26 +42,52 @@ App = {
     App.map.setView(location.coords, 11)
   },
 
-  locateUser: function (cb) {
+  /**
+   * @param {Object} [opts]
+   * @param {Boolean} [opts.force] Set true to ignore cached location data (if exists)
+   * @param {Number} [opts.timeout] Max time to spend searching for user location in ms
+   * @param {Function} [cb]
+   * @returns {*}
+   */
+  locateUser: function (opts, cb) {
+    if (typeof opts == "function") {
+      cb = opts
+      opts = {}
+    } else {
+      opts = opts || {}
+    }
+
+    opts.force = opts.force || false
+    opts.timeout = opts.timeout || 5000
+
     cb = cb || function () {}
 
-    App.map.on('locationfound', function (event) {
+    if (App.location && !opts.force) return cb(null, App.location)
 
-      App.geocoder().reverseQuery(event.latlng, function (err, response){
-        if (err) { return console.error(err) }
+    var timeoutId = null
+
+    function onLocationFound (e) {
+      clearTimeout(timeoutId)
+
+      App.geocoder().reverseQuery(e.latlng, function (er, response) {
+        if (er) console.warn("Failed to geocode", e.latlng, er)
 
         // response looks like: {"query":[-0.0801,51.4657],"results":[[{"bounds":[-0.523222999999989,51.27866,0.336112,51.72023],"lat":51.5040006418191,"lon":-0.109467698133307,"name":"London","score":900001728809196.6,"type":"place","id":"mapbox-places.219827"},{"bounds":[-0.107894862857551,51.4191873235362,-0.0231455141541109,51.51158478481],"lat":51.4653860541731,"lon":-0.0636831061709452,"name":"Southwark","score":30926433.0294826,"type":"province","id":"province.2903"},{"bounds":[-13.6913559567794,49.9096161909876,1.77170536308596,60.8475532028857],"lat":54.3177967325959,"lon":-1.91064039912679,"name":"United Kingdom","population":61113205,"type":"country","id":"country.152"}]],"attribution":{"mapbox-places":"<a href='http://mapbox.com/about/maps' target='_blank'>Terms & Feedback</a>"}}
-        var name = response.results[0][0].name
-
         App.location = {
-          name: name,
-          coords: App.normalizeCoords(event.latlng)
+          name: er ? "Unknown" : response.results[0][0].name,
+          coords: App.normalizeCoords(e.latlng)
         }
 
-        cb(App.location)
+        cb(null, App.location)
       })
+    }
 
-    })
+    App.map.once("locationfound", onLocationFound)
+
+    timeoutId = setTimeout(function () {
+      App.map.off("locationfound", onLocationFound)
+      cb(new Error("Timed out whilst locating user"))
+    }, opts.timeout)
 
     App.map.locate()
   },

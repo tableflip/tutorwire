@@ -109,9 +109,10 @@ Template.home.events({
   "submit #searchForm": onSubjectChange,
   "click #search": onSubjectChange,
   "click #findme": function () {
-    App.locateUser(function (location) {
-      App.showUserMarker(location)
-      $('#place').val(location.name)
+    App.locateUser(function (er, loc) {
+      if (er) return console.error(er)
+      App.showUserMarker(loc)
+      $('#place').val(loc.name)
     })
   },
   "click #join": function () { Router.go('join') },
