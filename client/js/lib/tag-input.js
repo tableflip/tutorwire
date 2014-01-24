@@ -115,17 +115,22 @@
 
   $.fn.extend({
     /**
+     * @param {String} [action]
      * @param {Object} [opts]
      * @param {String} [opts.action] API action to perform e.g. detach, clear
      * @param {Function} [opts.createTag] Function that'll create and return a tag (as a jQuery obj)
      * @param {Object} [opts.output] The element that new tags will be appended to (can also be specified as data-output)
      * @returns {*}
      */
-    tagInput: function (opts) {
+    tagInput: function (action, opts) {
+      if (!opts) {
+        opts = action
+      }
+
       opts = opts || {}
 
-      if (isString(opts)) {
-        opts = {action: opts}
+      if (isString(action)) {
+        opts = {action: action}
       } else {
         opts.action = opts.action || "attach"
       }
