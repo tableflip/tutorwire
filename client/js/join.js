@@ -66,7 +66,7 @@ JoinController = RouteController.extend({
   // Run once when loading a new route
   unload: function () {
     App.clearMarkers()
-    $("#qualification-tags-input").tagInput("detach")
+    $(".tag-input").tagInput("detach")
   }
 })
 
@@ -149,7 +149,7 @@ Template.join.rendered = function () {
     }
   })
 
-  $("#qualification-tags-input").tagInput()
+  $(".tag-input").tagInput()
 }
 
 function createTutorAndView (tutor) {

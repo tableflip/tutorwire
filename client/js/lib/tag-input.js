@@ -48,9 +48,24 @@
         onInputBtnClick: function (e) {
           e.preventDefault()
 
-          if (!input.val()) return
+          var val = $.trim(input.val())
 
-          var tag = opts.createTag(input.val(), inputCt)
+          if (!val) return
+
+          var lowerVal = val.toLowerCase()
+
+          // Is it a duplicate?
+          var dupes = data.tags.filter(function () {
+            return lowerVal == $("input[type=hidden]", this).val().toLowerCase()
+          })
+
+          // If dupe, act as though it has been added by clearing the input
+          if (dupes.length) {
+            input.val("")
+            return
+          }
+
+          var tag = opts.createTag(val, inputCt)
 
           tag.click(function (e) {
             e.preventDefault()

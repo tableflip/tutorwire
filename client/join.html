@@ -9,18 +9,18 @@
       {{> photoUpload}}
     </div>
     <div class="form-group">
-      <input type="text" placeholder="Name" name="name" id="name" class="form-control validate[required]" value="{{currentUser.profile.name}}">
+      <input type="text" placeholder="Name" name="name" id="name" class="form-control validate[required]" value="{{currentUser.profile.name}}" data-prompt-position="topLeft">
     </div>
     <div class="form-group">
-      <input type="text" placeholder="Subject" name="subject" id="subject" autocomplete="off" class="form-control validate[required]">
+      <input type="text" placeholder="Subject" name="subject" id="subject" autocomplete="off" class="form-control validate[required]" data-prompt-position="topLeft">
     </div>
     <div class="form-group">
-      <input type="text" placeholder="Near" name="place" id="place" autocomplete="off" class="form-control validate[required]">
+      <input type="text" placeholder="Near" name="place" id="place" autocomplete="off" class="form-control validate[required]" data-prompt-position="topLeft">
     </div>
     <div class="form-group">
       <textarea name="desc" id="desc" class="form-control" placeholder="Bio"></textarea>
     </div>
-    <div id="qualification-tags-input" class="form-group" data-output="#qualification-tags-output">
+    <div class="form-group tag-input" data-output="#qualification-tags-output">
       <div class="input-group">
         <input type="text" class="form-control" placeholder="Qualifications">
         <span class="input-group-btn">
@@ -29,7 +29,16 @@
       </div>
     </div>
     <div id="qualification-tags-output" class="form-group"></div>
-    <input type="submit" class="btn btn-default" id="addTutor" value="Create Profile"/>
+    <div class="form-group tag-input" data-output="#experience-tags-output">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Experience">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-plus"></span></button>
+        </span>
+      </div>
+    </div>
+    <div id="experience-tags-output" class="form-group"></div>
+    <input type="submit" class="btn btn-primary" id="addTutor" value="Create Profile"/>
   </form>
   {{else}}
     <p><strong>The basics:</strong></p>
