@@ -7,7 +7,10 @@ TutorController = RouteController.extend({
   },
 
   data: function () {
-    return Tutors.findByPuid(Session.get("tutor-puid"))
+    return {
+      bodyClass: "tutor",
+      tutor: Tutors.findByPuid(Session.get("tutor-puid"))
+    }
   },
 
   after: function () {

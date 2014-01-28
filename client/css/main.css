@@ -217,16 +217,18 @@ label {
   text-overflow: ellipsis;
   max-width: 100%;
   overflow: hidden;
+  font-size: 24px;
+  margin: 0.5em 0;
 }
-.tutor .overlay h1 strong {
-  display: inline-block;
-  width: 2.5em;
-  color: #ccc;
-  font-weight: normal;
-  text-align: right;
-}
-.tutor .overlay h1 span {
-  font-weight: normal;
+.tutor .overlay h1 .badge {
+  font-size: 22px;
+  background: #e68627;
+  background: -moz-linear-gradient(top,  #e68627 0%, #f05023 88%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e68627), color-stop(88%,#f05023));
+  background: -webkit-linear-gradient(top,  #e68627 0%,#f05023 88%);
+  background: -o-linear-gradient(top,  #e68627 0%,#f05023 88%);
+  background: -ms-linear-gradient(top,  #e68627 0%,#f05023 88%);
+  background: linear-gradient(to bottom,  #e68627 0%,#f05023 88%);
 }
 
 .new-messages > div{
