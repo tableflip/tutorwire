@@ -110,10 +110,14 @@ function onSubjectChange () {
 
     // Setup the typeahead with new data
     qualInput
+      .off("typeahead:selected")
       .typeahead("destroy")
       .typeahead({
-        name: "qualifications",
+        name: "qualifications-" + subject,
         local: Qualifications.findBySubject(subject).fetch().map(function (q) { return q.name })
+      })
+      .on("typeahead:selected", function (obj, datum) {
+        qualInput.closest(".tag-input").tagInput("add", {text: datum.value})
       })
 
     // When tagInput adds a tag, clear the typeahead query
@@ -137,10 +141,14 @@ function onSubjectChange () {
 
     // Setup the typeahead with new data
     expInput
+      .off("typeahead:selected")
       .typeahead("destroy")
       .typeahead({
-        name: "experiences",
+        name: "experiences-" + subject,
         local: Experiences.findBySubject(subject).fetch().map(function (q) { return q.name })
+      })
+      .on("typeahead:selected", function (obj, datum) {
+        expInput.closest(".tag-input").tagInput("add", {text: datum.value})
       })
 
     // When tagInput adds a tag, clear the typeahead query
