@@ -137,7 +137,7 @@ label {
 .overlay {
   padding: 20px 30px 5px 15px;
 }
-.overlay h1, .overlay p, .overlay a, .overlay .btn-link:hover, .overlay .btn-link:focus {
+.overlay h1, .overlay h2, .overlay p, .overlay a, .overlay .btn-link:hover, .overlay .btn-link:focus {
   color: #fff;
 }
 .photo-icon {
@@ -203,10 +203,12 @@ label {
 /** Join page **/
 
 .join .tag {
-  margin-left: 0.5em;
+  display: inline-block;
+  margin: 0 0.5em 0.25em 0;
 }
-.join .tag:first-child {
-  margin-left: 0;
+.join .tag .label {
+  display: inline-block;
+  vertical-align: top;
 }
 
 /** Tutor page **/
@@ -229,6 +231,17 @@ label {
   background: -o-linear-gradient(top,  #e68627 0%,#f05023 88%);
   background: -ms-linear-gradient(top,  #e68627 0%,#f05023 88%);
   background: linear-gradient(to bottom,  #e68627 0%,#f05023 88%);
+}
+.tutor .overlay h2 {
+  font-size: 16px;
+}
+.tutor .overlay #qualifications, .tutor .overlay #experiences {
+  list-style-type: none;
+  padding: 0;
+}
+.tutor .overlay #qualifications li, .tutor .overlay #experiences li {
+  display: inline-block;
+  margin-bottom: 0.25em;
 }
 
 .new-messages > div{

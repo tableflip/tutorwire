@@ -191,12 +191,14 @@ Template.join.rendered = function () {
       if (!valid) return console.warn("Registration form invalid")
 
       var tutor = {
-          photo: Session.get('photo')
-        , name: $('#name').val()
-        , email: $('#email').val()
-        , subject: $('#subject').val()
-        , desc: $('#desc').val()
-        , location: L.marker([App.location.coords.lat, App.location.coords.lng]).toGeoJSON()
+        photo: Session.get('photo'),
+        name: $('#name').val(),
+        email: $('#email').val(),
+        subject: $('#subject').val(),
+        desc: $('#desc').val(),
+        location: L.marker([App.location.coords.lat, App.location.coords.lng]).toGeoJSON(),
+        qualifications: $("#qualification-tags-output input").toArray().map(function (t) { return $(t).val() }),
+        experiences: $("#experience-tags-output input").toArray().map(function (t) { return $(t).val() })
       }
 
       tutor.location.properties.name = App.location.name
@@ -224,10 +226,11 @@ function createTutorAndView (tutor) {
 }
 
 function addPhotoDropTarget (target) {
-  if (!target) return console.log('no target')
+  if (!target) return console.error("No target")
+  target = $(target)
 
   filepicker.setKey('AeYGxADbBSoe2uvUCJHBWz')
-  filepicker.makeDropPane(target, {
+  filepicker.makeDropPane(target[0], {
     multiple: true,
     dragEnter: function () {
       target.html("Drop to upload")

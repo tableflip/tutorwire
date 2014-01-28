@@ -2,8 +2,7 @@
   {{> header }}
   <div class="overlay tutor">
     <div id="photoDropTarget" class="photoFrame"><img src="{{#if photo}}{{photo.url}}{{else}}http://www.gravatar.com/avatar?s=400&d=mm{{/if}}" alt="Profile photo for {{name}}"/></div>
-    <h1>Contact <span id="tutor-name">{{name}}</span></h1>
-    <br/>
+    <h1>Contact <br/> <span id="tutor-name">{{name}}</span></h1>
     {{#if currentUser}}
       <div class="contactMessage">
         <p>Hi {{name}},</p>

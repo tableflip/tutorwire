@@ -180,8 +180,9 @@
      * @returns {*}
      */
     tagInput: function (action, opts) {
-      if (!opts) {
+      if (action && Object.prototype.toString.call(action) != "[object String]") {
         opts = action
+        action = "attach"
       }
 
       opts = opts || {}

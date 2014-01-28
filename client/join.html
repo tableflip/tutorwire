@@ -18,7 +18,7 @@
       <input type="text" placeholder="Near" name="place" id="place" autocomplete="off" class="form-control validate[required]" data-prompt-position="topLeft">
     </div>
     <div class="form-group">
-      <textarea name="desc" id="desc" class="form-control" placeholder="Bio"></textarea>
+      <textarea name="desc" id="desc" class="form-control validate[maxSize[280]]" placeholder="Bio" maxlength="280"></textarea>
     </div>
     <div class="form-group tag-input" data-tag-output="#qualification-tags-output">
       <div class="input-group">
