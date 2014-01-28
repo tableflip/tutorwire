@@ -69,11 +69,23 @@ Conversations.sendMessage = function (recipientId, text, cb) {
 Qualifications = new Meteor.Collection("qualifications")
 
 Qualifications.findBySubject = function (subject) {
-  return Qualifications.find({subject: new RegExp(subject, "i")}, {sort: [["name", "ASC"]]})
+  console.log("Finding qualifications by subject", subject)
+  return Qualifications.find({
+    $or: [
+      {subjects: new RegExp(subject, "i")},
+      {subjects: "*"}
+    ]
+  }, {sort: [["name", "ASC"]]})
 }
 
 Experiences = new Meteor.Collection("experiences")
 
 Experiences.findBySubject = function (subject) {
-  return Experiences.find({subject: new RegExp(subject, "i")}, {sort: [["name", "ASC"]]})
+  console.log("Finding experiences by subject", subject)
+  return Experiences.find({
+    $or: [
+      {subjects: new RegExp(subject, "i")},
+      {subjects: "*"}
+    ]
+  }, {sort: [["name", "ASC"]]})
 }

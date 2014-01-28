@@ -106,32 +106,54 @@ function onSubjectChange () {
   var subject = $("#subject").val()
 
   Meteor.subscribe("qualifications-by-subject", subject, function () {
-    console.log(Qualifications.findBySubject(subject).fetch().map(function (q) { return q.name }))
     var qualInput = $("#qualification")
 
+    // Setup the typeahead with new data
     qualInput
       .typeahead("destroy")
       .typeahead({
         name: "qualifications",
         local: Qualifications.findBySubject(subject).fetch().map(function (q) { return q.name })
       })
-      .data("typeahead", true)
+
+    // When tagInput adds a tag, clear the typeahead query
+    function onTagAdd () {
+      if ($.contains(this, qualInput[0])) {
+        qualInput.typeahead("setQuery", "")
+      }
+    }
+
+    qualInput
+      .closest(".tag-input")
+      .off("tag:add").off("tag:dupe")
+      .on("tag:add", onTagAdd).on("tag:dupe", onTagAdd)
 
     // Style tt-hint like a form-control
     $(".tt-hint").addClass("form-control")
   })
 
   Meteor.subscribe("experiences-by-subject", subject, function () {
-    console.log(Experiences.findBySubject(subject).fetch().map(function (q) { return q.name }))
     var expInput = $("#experience")
 
+    // Setup the typeahead with new data
     expInput
       .typeahead("destroy")
       .typeahead({
         name: "experiences",
         local: Experiences.findBySubject(subject).fetch().map(function (q) { return q.name })
       })
-      .data("typeahead", true)
+
+    // When tagInput adds a tag, clear the typeahead query
+    function onTagAdd () {
+      if ($.contains(this, expInput[0])) {
+        expInput.typeahead("setQuery", "")
+      }
+    }
+
+    expInput
+      .closest(".tag-input")
+      .off("tag:add").off("tag:dupe")
+      .on("tag:add", onTagAdd).on("tag:dupe", onTagAdd)
 
     // Style tt-hint like a form-control
     $(".tt-hint").addClass("form-control")
@@ -146,7 +168,7 @@ Template.join.events({
 Template.join.rendered = function () {
 
   App.locateUser(function (er, loc) {
-    if (er) return console.error(er)
+    if (er) return console.error("Failed to locate user", er)
 
     showPlace(loc.name, loc.coords)
 

@@ -15,28 +15,32 @@ Meteor.startup(function () {
     })
   }
 
+  Qualifications.remove({})
+
   if (!Qualifications.find().count()) {
     [{
       name: "GCSE Level",
-      subject: "Maths"
+      subjects: ["*"]
     }, {
       name: "A-Level",
-      subject: "Maths"
+      subjects: ["*"]
     }, {
-      name: "Degree Level",
-      subject: "Maths"
+      name: "BSc",
+      subjects: ["Maths", "Physics", "Chemistry", "Biology"]
     }].forEach(function (q) {
-      console.log("Inserting qualification", q.name, "for subject", q.subject)
+      console.log("Inserting qualification", q.name, "for subjects", q.subjects)
       Qualifications.insert(q)
     })
   }
 
+  Experiences.remove({})
+
   if (!Experiences.find().count()) {
     [{
       name: "5 Years",
-      subject: "Maths"
+      subjects: ["*"]
     }].forEach(function (q) {
-      console.log("Inserting experience", q.name, "for subject", q.subject)
+      console.log("Inserting experience", q.name, "for subjects", q.subjects)
       Experiences.insert(q)
     })
   }
