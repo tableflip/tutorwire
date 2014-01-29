@@ -40,20 +40,20 @@ HomeController = RouteController.extend({
 })
 
 function setupTypeahead (input, collection, onSelected) {
-    var items = collection.find()
-    console.log("Subscribed to ", items.count(), collection._name)
+  var items = collection.find()
+  console.log("Subscribed to ", items.count(), collection._name)
 
-    $(input)
-        .off("typeahead:selected")
-        .typeahead("destroy")
-        .typeahead({
-            name: collection._name + "-" + collection.find().count(),
-            local: collection.find().fetch().map(function (s) { return s.name })
-        })
-        .on("typeahead:selected", onSelected)
+  $(input)
+    .off("typeahead:selected")
+    .typeahead("destroy")
+    .typeahead({
+        name: collection._name + "-" + collection.find().count(),
+        local: collection.find().fetch().map(function (s) { return s.name })
+    })
+    .on("typeahead:selected", onSelected)
 
-    // Style tt-hint like a form-control
-    $(".tt-hint").addClass("form-control")
+  // Style tt-hint like a form-control
+  $(".tt-hint").addClass("form-control")
 }
 
 function onSubjectChange (event) {
