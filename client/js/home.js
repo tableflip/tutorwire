@@ -2,7 +2,6 @@ HomeController = RouteController.extend({
   template: "home",
 
   before: function () {
-    console.log("before")
     Meteor.subscribe("tutors-for-subject", Session.get("subject"))
 
     Meteor.subscribe("subjects", function () {
@@ -41,7 +40,7 @@ HomeController = RouteController.extend({
 
 function setupTypeahead (input, collection, onSelected) {
   var items = collection.find()
-  console.log("Subscribed to ", items.count(), collection._name)
+  console.log("Subscribed to", items.count(), collection._name)
 
   $(input)
     .off("typeahead:selected")
