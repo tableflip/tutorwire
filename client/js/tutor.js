@@ -23,6 +23,10 @@ TutorController = RouteController.extend({
       var lngLat = tutor.location.geometry.coordinates
       App.map.setView([lngLat[1], lngLat[0]], App.map.getZoom())
     }
+  },
+
+  unload: function () {
+    App.clearMarkers()
   }
 })
 

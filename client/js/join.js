@@ -20,36 +20,27 @@ JoinController = RouteController.extend({
     var subjects = Subjects.find()
 
     if (subjects.count()) {
-      var subjectInput = $("#subject")
-
-      if (subjectInput.data("typeahead")) {
-        subjectInput.typeahead("destroy")
-      }
-
-      subjectInput
+      $("#subject")
+        .off("typeahead:selected")
+        .typeahead("destroy")
         .typeahead({
-          name: "subjects",
+          name: "subjects-" + subjects.count(),
           local: subjects.fetch().map(function (s) { return s.name })
         })
-        .data("typeahead", true)
+        .on("typeahead:selected", onSubjectChange)
     }
 
     var locations = CityLocations.findByCountry(Session.get("country"))
 
     if (locations.count()) {
-      var placeInput = $("#place")
-
-      if (placeInput.data("typeahead")) {
-        placeInput.unbind("typeahead:selected").typeahead("destroy")
-      }
-
-      placeInput
+      $("#place")
+        .off("typeahead:selected")
+        .typeahead("destroy")
         .typeahead({
-          name: "city-names",
+          name: "city-names-" + locations.count(),
           local: locations.fetch().map(function (l) { return l.name })
         })
         .on("typeahead:selected", onPlaceChange)
-        .data("typeahead", true)
     }
 
     // Style tt-hint like a form-control

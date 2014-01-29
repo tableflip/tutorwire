@@ -40,7 +40,7 @@ HomeController = RouteController.extend({
 
 function setupTypeahead (input, collection, onSelected) {
   var items = collection.find()
-  console.log("Subscribed to", items.count(), collection._name)
+  console.log("Setting up typeahead for", items.count(), collection._name)
 
   $(input)
     .off("typeahead:selected")
