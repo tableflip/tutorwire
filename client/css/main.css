@@ -244,26 +244,18 @@ label {
   margin-bottom: 0.25em;
 }
 
-.new-messages > div{
+.new-messages > div {
   position: absolute;
-  right:10px;
-  top:50px;
-  background: rgba(0, 0, 0, 0.5);
-  box-shadow: 0 0 0.25em #000;
-  border-right: 1px solid #000;
-  padding:4px 12px 2px;
-}
-.new-messages header {
-  text-align:center;
-  font-size:2em;
-  color: orange;
+  right: 10px;
+  top: 50px;
 }
 .new-messages ul {
-  padding:0;
+  padding: 0;
 }
 .new-messages li {
-  list-style-type:none;
-  cursor:pointer;
+  list-style-type: none;
+  cursor: pointer;
+  margin-bottom: 0.25em;
 }
 .new-messages a {
   position: relative;
@@ -271,13 +263,15 @@ label {
 }
 .new-messages a .badge {
   position: absolute;
-  top: -5px;
-  right: -5px;
+  top: -3px;
+  right: 0;
   background-color: #c5251c;
   box-shadow: 0 0 2px #000;
 }
-.new-messages .photo-icon{
+.new-messages .photo-icon {
   margin-bottom: 5px;
+  border-radius: 50%;
+  box-shadow: 0 0 0.25em #000;
 }
 
 .conversation #messages-container {
