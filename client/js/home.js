@@ -2,49 +2,26 @@ HomeController = RouteController.extend({
   template: "home",
 
   before: function () {
+    console.log("before")
     Meteor.subscribe("tutors-for-subject", Session.get("subject"))
 
     Meteor.subscribe("subjects", function () {
-      var subjects = Subjects.find()
-        , subjectInput = $("#subject")
-
-      if (subjectInput.data("typeahead")) {
-        subjectInput.unbind("typeahead:selected").typeahead("destroy")
-      }
-
-      subjectInput
-        .typeahead({
-          name: "subjects",
-          local: subjects.fetch().map(function (s) { return s.name })
-        })
-        .on("typeahead:selected", onSubjectChange)
-        .data("typeahead", true)
-
-      // Style tt-hint like a form-control
-      $(".tt-hint").addClass("form-control")
+      setupTypeahead("#subject", Subjects, onSubjectChange)
     })
+
+    if (Subjects.find().count()) {
+      setupTypeahead("#subject", Subjects, onSubjectChange)
+    }
 
     Session.set("country", "UK") // TODO: Localise
 
     Meteor.subscribe("city-locations", Session.get("country"), function () {
-      var locations = CityLocations.findByCountry(Session.get("country"))
-        , placeInput = $("#place")
-
-      if (placeInput.data("typeahead")) {
-        placeInput.unbind("typeahead:selected").typeahead("destroy")
-      }
-
-      placeInput
-        .typeahead({
-          name: "city-names",
-          local: locations.fetch().map(function (l) { return l.name })
-        })
-        .on("typeahead:selected", onPlaceChange)
-        .data("typeahead", true)
-
-      // Style tt-hint like a form-control
-      $(".tt-hint").addClass("form-control")
+      setupTypeahead("#place", CityLocations, onPlaceChange)
     })
+
+    if (CityLocations.find().count()) {
+      setupTypeahead("#place", CityLocations, onPlaceChange)
+    }
   },
 
   data: function () {
@@ -61,6 +38,23 @@ HomeController = RouteController.extend({
     App.clearMarkers()
   }
 })
+
+function setupTypeahead (input, collection, onSelected) {
+    var items = collection.find()
+    console.log("Subscribed to ", items.count(), collection._name)
+
+    $(input)
+        .off("typeahead:selected")
+        .typeahead("destroy")
+        .typeahead({
+            name: collection._name + "-" + collection.find().count(),
+            local: collection.find().fetch().map(function (s) { return s.name })
+        })
+        .on("typeahead:selected", onSelected)
+
+    // Style tt-hint like a form-control
+    $(".tt-hint").addClass("form-control")
+}
 
 function onSubjectChange (event) {
   event.preventDefault()
