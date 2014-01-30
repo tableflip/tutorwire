@@ -67,15 +67,7 @@ Template.conversation.events = {
 
     if (!text) return;
 
-    var fromId = Meteor.userId()
-
-    // TODO: push this into sendMessage, we shouldn't have to unpick the other recipients each time.
-    var users = this.conversation.users.filter(function(u){ return u.userId != fromId})
-    var toId = users && users[0] && users[0].userId // Erk, make nice.
-
-    console.log('sending', text, toId, this)
-
-    Conversations.sendMessage(toId, text, function (er) {
+    Conversations.sendMessage(this.conversation, text, function (er) {
       if (er) return console.error('Failed to send', er)
       console.log('sent message')
     })

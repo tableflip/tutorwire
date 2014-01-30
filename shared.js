@@ -18,8 +18,20 @@ Tutors.findByPuid = function (puid) {
 
 Conversations = new Meteor.Collection("conversations")
 
-Conversations.sendMessage = function (recipientId, text, cb) {
-  if (!recipientId) return cb(new Meteor.Error(400, 'No recipient id'))
+/**
+ * @param {Object|String} conv A conversation object or the recipient ID
+ * @param {String} text Message to send
+ * @param {Function} cb
+ */
+Conversations.sendMessage = function (conv, text, cb) {
+  var recipientId = null
+
+  if (!conv) return cb(new Meteor.Error(400, 'No conversation or recipient id'))
+
+  if (Object.prototype.toString.call(conv) == "[object String]") {
+    recipientId = conv
+    conv = null
+  }
 
   var userId = Meteor.userId()
 
@@ -31,14 +43,18 @@ Conversations.sendMessage = function (recipientId, text, cb) {
     created: Date.now()
   }
 
-  var conv = Conversations.findOne({owner: userId, users: {$elemMatch: {userId: recipientId}}})
-    , sender = Meteor.user()
+  // Attempt to find an existing conversation, if a recipientId has been passed
+  if (recipientId) {
+    conv = Conversations.findOne({owner: userId, users: {$elemMatch: {userId: recipientId}}})
+  }
+
+  var sender = Meteor.user()
 
   if (!sender) return cb(new Meteor.Error(401, "Login to send messages"))
 
   // Create if not
   if (!conv) {
-    console.log("Creating conversation between", userId, "and", recipientId)
+    console.log("Creating conversation between", sender.profile.name, "and", recipientId)
     Conversations.insert({
       owner: sender._id,
       users: [{
@@ -58,7 +74,7 @@ Conversations.sendMessage = function (recipientId, text, cb) {
     })
 
   } else {
-    console.log("Updating conversation between", userId, "and", recipientId)
+    console.log("Updating conversation between", conv.users.map(function (u) { return u.name }).join(" and "))
     Conversations.update(conv._id, {$push: {messages: message}}, function (er) {
         if (er) return cb(er)
         cb(null, Conversations.findOne(conv._id))
