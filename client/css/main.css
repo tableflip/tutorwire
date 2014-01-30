@@ -304,6 +304,7 @@ label {
 .conversation #messages img {
   position: absolute;
   bottom: 0;
+  border-radius: 50%;
 }
 .conversation #messages li.them img {
   left: 0;
