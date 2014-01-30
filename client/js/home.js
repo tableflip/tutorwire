@@ -8,19 +8,11 @@ HomeController = RouteController.extend({
       setupTypeahead("#subject", Subjects, onSubjectChange)
     })
 
-    if (Subjects.find().count()) {
-      setupTypeahead("#subject", Subjects, onSubjectChange)
-    }
-
     Session.set("country", "UK") // TODO: Localise
 
     Meteor.subscribe("city-locations", Session.get("country"), function () {
       setupTypeahead("#place", CityLocations, onPlaceChange)
     })
-
-    if (CityLocations.find().count()) {
-      setupTypeahead("#place", CityLocations, onPlaceChange)
-    }
   },
 
   data: function () {
@@ -115,10 +107,18 @@ Template.home.events({
 Template.home.rendered = function () {
 
   var subject = $("#subject")
-      , place = $("#place")
+  var place = $("#place")
 
   if (Session.get("subject")) {
     subject.val(Session.get("subject"))
+  }
+
+  if (Subjects.find().count()) {
+    setupTypeahead(subject, Subjects, onSubjectChange)
+  }
+
+  if (CityLocations.find().count()) {
+    setupTypeahead(place, CityLocations, onPlaceChange)
   }
 
   if (Session.get("country") != "UK") {
