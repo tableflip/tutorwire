@@ -151,7 +151,6 @@ label {
   width:200px;
   height:200px;
   overflow: hidden;
-  line-height: 170px;
   background: #555;
   border:solid white 10px;
   color:#CCC;
@@ -161,6 +160,24 @@ label {
   width:100%;
   min-height: 100%;
 }
+#photoDropTarget{
+	position: relative;
+}
+#photoDropTarget p{
+	position: absolute;
+	top:50%;
+	width:100%;
+	background:rgba(0,0,0,0.6);
+	padding:10px 0;
+}
+#photoDropTarget.hasPhoto p{
+	display:none;
+}
+#photoDropTarget.hasPhoto:hover p,
+#photoDropTarget.dragEnter p{
+	display:block;
+}
+
 .strapline {
   display: none;
 }

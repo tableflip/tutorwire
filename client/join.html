@@ -48,11 +48,14 @@
 </template>
 
 <template name="photoUpload">
-{{#if photo}}
-  <img src="{{photo.url}}"/>
-{{else}}
-  <div id="photoDropTarget">
-    Drop photo here
+  <div id="photoDropTarget" class="{{#if photo}}hasPhoto{{/if}}">
+    {{#if photo}}
+    <img src="{{photo.url}}"/>
+    {{/if}}
+    {{#if progress}}
+      <p>Uploading {{progress}}%</p>
+    {{else}}
+      <p>Drop photo here</p>
+    {{/if}}
   </div>
-{{/if}}
 </template>

@@ -224,20 +224,21 @@ function addPhotoDropTarget (target) {
   filepicker.makeDropPane(target[0], {
     multiple: true,
     dragEnter: function () {
-      target.html("Drop to upload")
+      target.addClass('dragEnter')
     },
     dragLeave: function () {
-      target.html("Drop files here")
+      target.removeClass('dragEnter')
     },
     onSuccess: function (fpfiles) {
       console.log(fpfiles)
       Session.set('photo', fpfiles[0])
+      Session.set('photo-upload-percentage', null)
     },
     onError: function (type, message) {
       $("#localDropResult").text("(" + type + ") " + message)
     },
     onProgress: function (percentage) {
-      target.text("Uploading (" + percentage + "%)")
+      Session.set('photo-upload-percentage', percentage)
     }
   })
 }
@@ -248,4 +249,8 @@ Template.photoUpload.rendered = function () {
 
 Template.photoUpload.photo = function () {
   return Session.get('photo')
+}
+
+Template.photoUpload.progress = function () {
+  return Session.get('photo-upload-percentage')
 }
