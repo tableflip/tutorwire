@@ -6,7 +6,7 @@
     {{#if currentUser}}
       <div class="contactMessage">
         <p>Hi {{name}},</p>
-        <p>I live near {{location.name}} & I'd like to learn {{subject}}.</p>
+        <p>{{#if location.name}}I live near {{location.name}} & {{/if}}I'd like to learn {{subject}}.</p>
         <p>Please let me know if you're available.</p>
         <p>{{currentUser.profile.name}}</p>
         <button id="tutor-contact" class="btn btn-default"><span class="glyphicon glyphicon-envelope"></span> Send</button>
