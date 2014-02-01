@@ -140,6 +140,12 @@ label {
   font-size: 1.15em;
   color: #fff;
 }
+label.placeholder {
+  display: none;
+}
+.no-placeholder label.placeholder {
+  display: inline-block;
+}
 .navbar {
   position: absolute;
   top:0;
