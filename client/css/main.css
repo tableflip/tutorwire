@@ -121,6 +121,15 @@ a, a:hover {
   overflow-y: auto;
   z-index: 1000; /* For < IE10 */
 }
+#main::-webkit-scrollbar {
+  width: 12px;
+}
+#main::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+#main::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.5);
+}
 
 body {
   background: #fefefe;
