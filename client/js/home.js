@@ -5,13 +5,13 @@ HomeController = RouteController.extend({
     Meteor.subscribe("tutors-for-subject", Session.get("subject"))
 
     Meteor.subscribe("subjects", function () {
-      setupTypeahead("#subject", Subjects, onSubjectChange)
+      setupTypeahead("subjects", "#subject", Subjects.find(), onSubjectChange)
     })
 
     Session.set("country", "UK") // TODO: Localise
 
     Meteor.subscribe("city-locations", Session.get("country"), function () {
-      setupTypeahead("#place", CityLocations, onPlaceChange)
+      setupTypeahead("places", "#place", findCityLocationsBySessionCountry(), onPlaceChange)
     })
   },
 
@@ -30,16 +30,27 @@ HomeController = RouteController.extend({
   }
 })
 
-function setupTypeahead (input, collection, onSelected) {
-  var items = collection.find()
-  console.log("Setting up typeahead for", items.count(), collection._name)
+function findCityLocationsBySessionCountry () {
+  return CityLocations.findByCountry(Session.get("country"))
+}
+
+/**
+ * @param {String} name Unique name to give to the typeahead
+ * @param {String} input CSS selector for the element that should become a typeahead
+ * @param {Meteor.Collection.Cursor} suggestions Items to appear in the suggestions list
+ * @param {Function} onSelected Function to call when a suggestion is selected
+ */
+function setupTypeahead (name, input, suggestions, onSelected) {
+  console.log("Setting up typeahead for", suggestions.count(), name)
+
+  setupTypeahead.lastId = setupTypeahead.lastId || 0
 
   $(input)
     .off("typeahead:selected")
     .typeahead("destroy")
     .typeahead({
-        name: collection._name + "-" + collection.find().count(),
-        local: collection.find().fetch().map(function (s) { return s.name })
+        name: name + "-" + (setupTypeahead.lastId++),
+        local: suggestions.fetch().map(function (s) { return s.name })
     })
     .on("typeahead:selected", onSelected)
 
@@ -92,7 +103,8 @@ function onPlaceChange (e) {
 }
 
 function onPlaceKeypress (e) {
-  if (e.keyCode == 13) {
+  var code = e.keyCode || e.which
+  if (code == 13) {
     onPlaceChange(e)
   }
 }
@@ -137,11 +149,11 @@ Template.home.rendered = function () {
   }
 
   if (Subjects.find().count()) {
-    setupTypeahead(subject, Subjects, onSubjectChange)
+    setupTypeahead("subjects", subject, Subjects.find(), onSubjectChange)
   }
 
   if (CityLocations.find().count()) {
-    setupTypeahead(place, CityLocations, onPlaceChange)
+    setupTypeahead("places", place, findCityLocationsBySessionCountry(), onPlaceChange)
   }
 
   if (Session.get("country") != "UK") {

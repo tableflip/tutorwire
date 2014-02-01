@@ -6,45 +6,9 @@ JoinController = RouteController.extend({
     return [Meteor.subscribe("subjects"), Meteor.subscribe("city-locations", Session.get("country"))]
   },
 
-  // Runs before the action, every time the data changes.
-  before: function () {
-
-  },
   // provide data to the template
   data: function () {
     return {bodyClass: "join"}
-  },
-
-  // Runs after the action, every time the data changes.
-  after: function () {
-    var subjects = Subjects.find()
-
-    if (subjects.count()) {
-      $("#subject")
-        .off("typeahead:selected")
-        .typeahead("destroy")
-        .typeahead({
-          name: "subjects-" + subjects.count(),
-          local: subjects.fetch().map(function (s) { return s.name })
-        })
-        .on("typeahead:selected", onSubjectChange)
-    }
-
-    var locations = CityLocations.findByCountry(Session.get("country"))
-
-    if (locations.count()) {
-      $("#place")
-        .off("typeahead:selected")
-        .typeahead("destroy")
-        .typeahead({
-          name: "city-names-" + locations.count(),
-          local: locations.fetch().map(function (l) { return l.name })
-        })
-        .on("typeahead:selected", onPlaceChange)
-    }
-
-    // Style tt-hint like a form-control
-    $(".tt-hint").addClass("form-control")
   },
 
   // Run once when route is matched. Is *NOT* re-run on hot code re-load
@@ -60,6 +24,34 @@ JoinController = RouteController.extend({
     $(".tag-input").tagInput("detach")
   }
 })
+
+function findCityLocationsBySessionCountry () {
+  return CityLocations.findByCountry(Session.get("country"))
+}
+
+/**
+ * @param {String} name Unique name to give to the typeahead
+ * @param {String} input CSS selector for the element that should become a typeahead
+ * @param {Meteor.Collection.Cursor} suggestions Items to appear in the suggestions list
+ * @param {Function} onSelected Function to call when a suggestion is selected
+ */
+function setupTypeahead (name, input, suggestions, onSelected) {
+  console.log("Setting up typeahead for", suggestions.count(), name)
+
+  setupTypeahead.lastId = setupTypeahead.lastId || 0
+
+  $(input)
+    .off("typeahead:selected")
+    .typeahead("destroy")
+    .typeahead({
+      name: name + "-" + (setupTypeahead.lastId++),
+      local: suggestions.fetch().map(function (s) { return s.name })
+    })
+    .on("typeahead:selected", onSelected)
+
+  // Style tt-hint like a form-control
+  $(".tt-hint").addClass("form-control")
+}
 
 function showPlace (name, coords) {
   console.log('Showing', name, coords)
@@ -100,16 +92,9 @@ function onSubjectChange () {
     var qualInput = $("#qualification")
 
     // Setup the typeahead with new data
-    qualInput
-      .off("typeahead:selected")
-      .typeahead("destroy")
-      .typeahead({
-        name: "qualifications-" + subject,
-        local: Qualifications.findBySubject(subject).fetch().map(function (q) { return q.name })
-      })
-      .on("typeahead:selected", function (obj, datum) {
-        qualInput.closest(".tag-input").tagInput("add", {text: datum.value})
-      })
+    setupTypeahead("qualifications", qualInput, Qualifications.findBySubject(subject), function (obj, datum) {
+      qualInput.closest(".tag-input").tagInput("add", {text: datum.value})
+    })
 
     // When tagInput adds a tag, clear the typeahead query
     function onTagAdd () {
@@ -122,25 +107,15 @@ function onSubjectChange () {
       .closest(".tag-input")
       .off("tag:add").off("tag:dupe")
       .on("tag:add", onTagAdd).on("tag:dupe", onTagAdd)
-
-    // Style tt-hint like a form-control
-    $(".tt-hint").addClass("form-control")
   })
 
   Meteor.subscribe("experiences-by-subject", subject, function () {
     var expInput = $("#experience")
 
     // Setup the typeahead with new data
-    expInput
-      .off("typeahead:selected")
-      .typeahead("destroy")
-      .typeahead({
-        name: "experiences-" + subject,
-        local: Experiences.findBySubject(subject).fetch().map(function (q) { return q.name })
-      })
-      .on("typeahead:selected", function (obj, datum) {
-        expInput.closest(".tag-input").tagInput("add", {text: datum.value})
-      })
+    setupTypeahead("experiences", expInput, Experiences.findBySubject(subject), function (obj, datum) {
+      expInput.closest(".tag-input").tagInput("add", {text: datum.value})
+    })
 
     // When tagInput adds a tag, clear the typeahead query
     function onTagAdd () {
@@ -153,9 +128,6 @@ function onSubjectChange () {
       .closest(".tag-input")
       .off("tag:add").off("tag:dupe")
       .on("tag:add", onTagAdd).on("tag:dupe", onTagAdd)
-
-    // Style tt-hint like a form-control
-    $(".tt-hint").addClass("form-control")
   })
 }
 
@@ -165,6 +137,8 @@ Template.join.events({
 })
 
 Template.join.rendered = function () {
+  setupTypeahead("subjects", "#subject", Subjects.find(), onSubjectChange)
+  setupTypeahead("places", "#place", findCityLocationsBySessionCountry(), onPlaceChange)
 
   App.locateUser(function (er, loc) {
     if (er) return console.error("Failed to locate user", er)
@@ -176,8 +150,15 @@ Template.join.rendered = function () {
     }
   })
 
-  $("form.tutor-profile").validationEngine("attach", {
+  // Disable enter to submit, unless it is enter on the submit button
+  $(this.find("form")).keypress(function (e) {
+    var code = e.keyCode || e.which
+    if (code == 13 && !$(e.target).is("input[type=submit]")) {
+      e.preventDefault()
+    }
+  })
 
+  $("form.tutor-profile").validationEngine("attach", {
     onValidationComplete: function (form, valid) {
       if (!valid) return console.warn("Registration form invalid")
 
