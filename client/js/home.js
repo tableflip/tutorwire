@@ -47,8 +47,9 @@ function setupTypeahead (input, collection, onSelected) {
   $(".tt-hint").addClass("form-control")
 }
 
-function onSubjectChange (event) {
-  event.preventDefault()
+function onSubjectChange (e) {
+  e.preventDefault()
+
   var subject = $("#subject")
 
   if (!subject.val()) {
@@ -58,7 +59,15 @@ function onSubjectChange (event) {
   Session.set("subject", subject.val())
 }
 
-function onPlaceChange () {
+function onSubjectKeypress (e) {
+  if (e.keyCode == 13) {
+    onSubjectChange(e)
+  }
+}
+
+function onPlaceChange (e) {
+  e.preventDefault()
+
   var name = $("#place").val()
     , location = CityLocations.findOne({name: name})
 
@@ -82,6 +91,12 @@ function onPlaceChange () {
   }
 }
 
+function onPlaceKeypress (e) {
+  if (e.keyCode == 13) {
+    onPlaceChange(e)
+  }
+}
+
 function showPlace (name, coords) {
   console.log("Showing", name, coords)
   App.location = {name: name, coords: App.normalizeCoords(coords)}
@@ -90,7 +105,9 @@ function showPlace (name, coords) {
 
 Template.home.events({
   "change #place": onPlaceChange,
+  "keypress #place": onPlaceKeypress,
   "change #subject": onSubjectChange,
+  "keypress #subject": onSubjectKeypress,
   "submit #searchForm": onSubjectChange,
   "click #search": onSubjectChange,
   "click #findme": function () {
