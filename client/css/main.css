@@ -52,7 +52,7 @@ a, a:hover {
   border-radius: 2px;
   padding: 3px 8px 4px 10px;
   background-clip: border-box;
-  z-index: 1000; /* For < IE10 */
+  z-index: 1100; /* For < IE10 */
 }
 #account .dropdown-menu {
   margin: 10px -8px 0 0;
