@@ -28,7 +28,7 @@ ConversationController = RouteController.extend({
 
 function resizeMessagesCt () {
   var winHeight = $(window).height()
-  $("#messages-container").height(winHeight - 150)
+  $("#messages-container").height(winHeight - 180)
 }
 
 function scrollBottomMessages () {
