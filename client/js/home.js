@@ -97,11 +97,17 @@ Template.home.events({
     App.locateUser(function (er, loc) {
       if (er) return console.error(er)
       App.showUserMarker(loc)
-      $('#place').val(loc.name)
+      $("#place").val(loc.name)
     })
   },
-  "click #join": function () { Router.go('join') },
-  "click #about": function () { Router.go('about') }
+  "click #join": function (e) {
+    e.preventDefault()
+    Router.go("join")
+  },
+  "click #about": function (e) {
+    e.preventDefault()
+    Router.go("about")
+  }
 })
 
 Template.home.rendered = function () {
