@@ -63,8 +63,8 @@ function sendEmail (opts, cb) {
 var handlers = {
   unreadMessage: function (email, cb) {
     sendEmail({
-      to: email.to.email,
-      from: email.from.name + " (via TutorWire) <notify@tutorwire.org>",
+      to: email.to.emails[0],
+      from: email.from.profile.name + " (via TutorWire) <notify@tutorwire.org>",
       // TODO: Remove when Meteor adds support for server side templating
       subject: Handlebars.templates["unread-message-subject"](email),
       text: Handlebars.templates["unread-message-text"](email),
