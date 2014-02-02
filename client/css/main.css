@@ -10,7 +10,8 @@ a, a:hover {
   color: white;
 }
 .brand {
-  background: #fff;
+  /*background: #fff;*/
+  background: transparent;
   padding: 8px 10px 15px;
 }
 .brand h1,
@@ -28,7 +29,8 @@ a, a:hover {
   width: 100%;
 }
 .brand h2 {
-  color: #368281;
+  /*color: #368281;*/
+  color: #fff;
   font-weight: 400;
   font-size: 1.1em;
   letter-spacing: 1.5px;
