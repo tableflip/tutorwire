@@ -18,7 +18,6 @@ Router.map(function () {
   this.route("tutor", {path: "/tutor/:puid", controller: TutorController})
   this.route("contact", {path: "/tutor/:puid/contact", controller: ContactController})
   this.route("conversation", {path: "/conversation/:puid", controller: ConversationController})
-  this.route("about", {path: "/about", action: function () { this.redirect("http://about.tutorwire.org/") }})
 })
 
 Handlebars.registerHelper('isoTime', function (timestamp) {

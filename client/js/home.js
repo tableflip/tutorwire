@@ -132,10 +132,6 @@ Template.home.events({
   "click #join": function (e) {
     e.preventDefault()
     Router.go("join")
-  },
-  "click #about": function (e) {
-    e.preventDefault()
-    Router.go("about")
   }
 })
 
