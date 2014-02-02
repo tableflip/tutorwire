@@ -5,6 +5,7 @@
     "accounts-ui-bootstrap-3": {},
     "houston": {},
     "moment": {},
-    "user-status": {}
+    "user-status": {},
+    "handlebars-server": {}
   }
 }

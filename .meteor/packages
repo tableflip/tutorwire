@@ -13,3 +13,5 @@ accounts-password
 accounts-ui-bootstrap-3
 moment
 user-status
+handlebars-server
+email

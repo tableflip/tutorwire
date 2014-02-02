@@ -86,12 +86,20 @@ Conversations.allow({
 
     // New messages must be syndicated to other conversations
     if (modifier.$push && modifier.$push.messages) {
+      var from = Meteor.users.findOne(userId)
+
       conv.users.filter(function (u) {
         return u.userId != userId
       }).forEach(function (u) {
         var conv = Conversations.findOne({owner: u.userId, users: {$elemMatch: {userId: userId}}})
+
         if (!conv) return console.error("Reverse conversation not found", u.userId, userId)
+
         Conversations.update(conv._id, {$push: modifier.$push, $inc: {unread: 1}, $set: {updated: now}})
+
+        var to = Meteor.users.findOne(u.userId)
+
+        Emails.notifyUnreadMessage(to, from, {conversationPuid: conv.puid})
       })
     }
 
