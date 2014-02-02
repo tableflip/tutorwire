@@ -11,10 +11,10 @@ JoinController = RouteController.extend({
     return {bodyClass: "join"}
   },
 
-  // Run once when route is matched. Is *NOT* re-run on hot code re-load
-  load: function () {
-    if (Meteor.user()){
-      Session.set('photo', Meteor.user().profile.photo)
+  before: function () {
+    var user = Meteor.user()
+    if (user) {
+      Session.set("photo", user.profile.photo)
     }
   },
 
