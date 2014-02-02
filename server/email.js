@@ -31,7 +31,7 @@ function sendEmails () {
     }
 
     handlers[email.type](email, function (er) {
-      if (er) return console.error("Failed to send email", er)
+      if (er) return console.error("Failed to send email", er.stack)
 
       Emails.remove(email._id)
 
@@ -51,6 +51,7 @@ function sendEmails () {
 }
 
 function sendEmail (opts, cb) {
+  console.log("Sending email to", opts.to, "from", opts.from)
   try {
     Email.send(opts)
   } catch (er) {
@@ -63,7 +64,7 @@ function sendEmail (opts, cb) {
 var handlers = {
   unreadMessage: function (email, cb) {
     sendEmail({
-      to: email.to.emails[0],
+      to: email.to.emails[0].address,
       from: email.from.profile.name + " (via TutorWire) <notify@tutorwire.org>",
       // TODO: Remove when Meteor adds support for server side templating
       subject: Handlebars.templates["unread-message-subject"](email),
@@ -74,7 +75,7 @@ var handlers = {
 }
 
 function scheduleSendEmails () {
-  Meteor.setTimeout(sendEmails, 1000 * 60 * 1)
+  Meteor.setTimeout(sendEmails, 1000 * 60 * 5)
 }
 
 scheduleSendEmails()
