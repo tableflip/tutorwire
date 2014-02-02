@@ -97,7 +97,9 @@ Conversations.allow({
 
         Conversations.update(conv._id, {$push: modifier.$push, $inc: {unread: 1}, $set: {updated: now}})
 
-        Emails.notifyUnreadMessage(u, from, {conversationPuid: conv.puid})
+        var to = Meteor.users.findOne(u.userId)
+
+        Emails.notifyUnreadMessage(to, from, {conversationPuid: conv.puid})
       })
     }
 

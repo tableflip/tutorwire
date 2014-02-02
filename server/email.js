@@ -39,6 +39,11 @@ function sendEmails () {
 
       if (i == emails.length - 1) {
         console.log("All queued emails sent")
+
+        emails.forEach(function (email) {
+          Emails.remove(email._id)
+        })
+
         scheduleSendEmails()
       }
     })
@@ -60,9 +65,10 @@ var handlers = {
     sendEmail({
       to: email.to.email,
       from: email.from.name + " (via TutorWire) <notify@tutorwire.org>",
-      subject: Template.unreadMessageEmailSubject(email),
-      text: Template.unreadMessageEmailText(email),
-      html: Template.unreadMessageEmailHtml(email)
+      // TODO: Remove when Meteor adds support for server side templating
+      subject: Handlebars.templates["unread-message-subject"](email),
+      text: Handlebars.templates["unread-message-text"](email),
+      html: Handlebars.templates["unread-message-html"](email)
     }, cb)
   }
 }
