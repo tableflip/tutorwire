@@ -410,6 +410,7 @@ label.placeholder {
 
 .twitter-typeahead {
   width: 100%;
+  vertical-align: middle;
 }
 .twitter-typeahead .tt-query:not(:first-child):not(:last-child) {
   border-top-left-radius: 4px;
