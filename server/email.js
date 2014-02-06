@@ -20,34 +20,35 @@ function sendEmails () {
 
   console.log("Sending queued emails")
 
-  emails.forEach(function (email, i) {
+  emails.forEach(function (email) {
     if (isOnline(email.to)) {
       console.log("Removing", email.type, "email for online user", email.to._id)
-      return Emails.remove(email._id)
+      return cleanupAndSchedule(email, emails)
     }
 
     if (!handlers[email.type]) {
-      return console.error("No handler for email", email.type)
+      console.error("No handler for email", email.type)
+      return cleanupAndSchedule(email, emails)
     }
 
     handlers[email.type](email, function (er) {
       if (er) return console.error("Failed to send email", er.stack)
-
-      Emails.remove(email._id)
-
       console.log("Email to", email.to._id, "successfully sent")
-
-      if (i == emails.length - 1) {
-        console.log("All queued emails sent")
-
-        emails.forEach(function (email) {
-          Emails.remove(email._id)
-        })
-
-        scheduleSendEmails()
-      }
+      cleanupAndSchedule(email, emails)
     })
   })
+}
+
+// Remove the passed email, schedule another sending run if it is the last in the list
+function cleanupAndSchedule (email, emails) {
+  var index = emails.indexOf(email)
+
+  Emails.remove(emails[index]._id)
+
+  if (index == emails.length - 1) {
+    console.log("All queued emails sent")
+    scheduleSendEmails()
+  }
 }
 
 function sendEmail (opts, cb) {
