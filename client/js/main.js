@@ -20,6 +20,9 @@ Router.map(function () {
   this.route("conversation", {path: "/conversation/:puid", controller: ConversationController})
 })
 
+// Track page view on route load
+Router.load(function () { ga("send", "pageview") })
+
 Handlebars.registerHelper('isoTime', function (timestamp) {
   return moment(timestamp).toISOString()
 })
