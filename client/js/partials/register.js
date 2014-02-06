@@ -12,6 +12,8 @@ Template.register.rendered = function () {
       console.log('registerToContact', arguments)
       if (!valid) return console.warn("Registration form invalid")
 
+      $("#register").prop("disabled", true)
+
       var opts = {
         email: $('#email').val(),
         password: $('#password').val(),

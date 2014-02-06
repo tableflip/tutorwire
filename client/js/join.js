@@ -162,6 +162,8 @@ Template.join.rendered = function () {
     onValidationComplete: function (form, valid) {
       if (!valid) return console.warn("Registration form invalid")
 
+      $("#addTutor").prop("disabled", true)
+
       var tutor = {
         photo: Session.get('photo'),
         name: $('#name').val(),
