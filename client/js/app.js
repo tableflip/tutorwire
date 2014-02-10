@@ -6,6 +6,50 @@ App = {
     return L.mapbox.geocoder('tutorwire.map-rbl1tiup')
   },
 
+  // mimic the leaflet api whilst we test the service
+  cloudmadeGeocoder: function() {
+
+    var boundingBox = '-10.8,49.9;2.4,58.9'
+
+    var queryUrl = "http://beta.geocoding.cloudmade.com/v3/db4b882af0804530bea000fe6823639d/api/geo.location.search.2?format=json&source=OSM&enc=UTF-8&limit=5&bbox=-10.8,49.9;2.4,58.9&locale=en&q=[country=United%20Kingdom]%20"
+
+    return {
+      query: function(term, cb /*err, response*/){
+        var url = queryUrl + encodeURI(term)  + '&callback=?'
+        console.log('Querying cloudmade geocoder', term)
+        $.getJSON(url, function(data){
+          console.log('Cloudmade returned', data)
+          var place = data.places[0]
+          var response = {
+            latlng: [place.position.lat, place.position.lon]
+          }
+
+          cb(null, response)
+        })
+      }
+    }
+  },
+
+  mapquestGeocoder: function(){
+    var boundingBox = '-10.8,58.9,2.4,49.9'
+    var queryUrl = "http://www.mapquestapi.com/geocoding/v1/address?key=Fmjtd%7Cluur21u7n9%2C7x%3Do5-90txlu&inFormat=kvp&outFormat=json&maxResults=5&boundingBox=-10.8,58.9,2.4,49.9&thumbMaps=false&adminArea1=UK&location="
+    return {
+      query: function(term, cb){
+        var url = queryUrl + encodeURI(term) + ',UK' + '&callback=?'
+        console.log('Querying mapquest geocoder', term)
+        $.getJSON(url, function(data){
+          console.log('mapquest returned', data)
+          var place = data.results[0].locations[0]
+          var response = {
+            latlng: [place.latLng.lat, place.latLng.lng]
+          }
+
+          cb(null, response)
+        })
+      }
+    }
+  },
+
   map: null,
 
   initMap: function (id) {

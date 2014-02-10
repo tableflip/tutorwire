@@ -87,7 +87,7 @@ function onPlaceChange (e) {
   if (!location) {
     console.log("Geocoding", name)
 
-    App.geocoder().query(name, function (er, response) {
+    App.mapquestGeocoder().query(name, function (er, response) {
       if (er) return console.error("Failed to geocode", name, er)
 
       console.log("Geocoded", name, response)
